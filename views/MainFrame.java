@@ -35,11 +35,11 @@ public class MainFrame extends JFrame {
 	
 	private void createMenu(){
 		mainMenu = new JMenuBar();
-		file = new JMenu("Файл");
-		options = new JMenu("Настройки");
-		file.add(new JMenuItem("Подключить"));
+		file = new JMenu("Р¤Р°Р№Р»");
+		options = new JMenu("РќР°СЃС‚СЂРѕР№РєРё");
+		file.add(new JMenuItem("РџРѕРґРєР»СЋС‡РёС‚СЊ"));
 		file.add(new JSeparator());
-		file.add(new JMenuItem("Выход"));
+		file.add(new JMenuItem("Р’С‹С…РѕРґ"));
 		mainMenu.add(file);
 		options.add(new JMenuItem("Emptyness"));
 		mainMenu.add(options);

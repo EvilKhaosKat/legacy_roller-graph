@@ -9,7 +9,8 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JSeparator;
 
-import models.generatorOfCoordinates;
+import models.DrawingOrganizer;
+import models.ReadingOrganizer;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.ChartPanel;
@@ -28,6 +29,7 @@ public class MainFrame extends JFrame {
 	private JMenuBar mainMenuBar;
 
     private JMenuItem testMenuItem1;
+    private JMenuItem testMenuItem2;
 
 	private JFreeChart rollerDiagrammer;
 	private ChartPanel contentChartPanel;
@@ -51,13 +53,20 @@ public class MainFrame extends JFrame {
 		mainMenuBar.add(menuOptions);
 
         testMenu = new JMenu("Тестовое меню");
-        testMenuItem1 = new JMenuItem("Тестовое добавление элементов 1");
+        testMenuItem1 = new JMenuItem("Тестовое чтение элементов 1");
         testMenuItem1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 testMenuItem1ActionPerformed(evt);
             }
         });
         testMenu.add(testMenuItem1);
+        testMenuItem2 = new JMenuItem("Отрисовать элементы");
+        testMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                testMenuItem2ActionPerformed(evt);
+            }
+        });
+        testMenu.add(testMenuItem2);
         mainMenuBar.add(testMenu);
 
 
@@ -76,9 +85,15 @@ public class MainFrame extends JFrame {
 
     private void testMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {
         //TODO обработчик нажатия
+        ReadingOrganizer.startReading();
+        //DrawingOrganizer.startDrawing();
     }
 
+    private void testMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {
+        //TODO обработчик нажатия
 
+        //DrawingOrganizer.startDrawing();
+    }
 
 
 
@@ -91,6 +106,8 @@ public class MainFrame extends JFrame {
 
     private void createChartField(){
         dataset = new XYSeriesCollection();
+        DrawingOrganizer.setDataset(dataset);
+
 		rollerDiagrammer = ChartFactory.createXYLineChart(null, null, null, dataset, PlotOrientation.VERTICAL, false, false, false);
 		contentChartPanel = new ChartPanel(rollerDiagrammer);
 		setContentPane(contentChartPanel);
@@ -113,4 +130,5 @@ public class MainFrame extends JFrame {
 		createGUI();
 
 	}
+
 }

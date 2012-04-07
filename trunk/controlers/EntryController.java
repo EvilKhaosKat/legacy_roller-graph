@@ -16,7 +16,7 @@ public class EntryController {
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		test = new MainFrame("test");
+		test = new MainFrame("Roller graph");
 		test.setVisible(true);
 	}
 

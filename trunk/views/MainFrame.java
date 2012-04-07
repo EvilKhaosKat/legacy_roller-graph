@@ -8,12 +8,12 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JSeparator;
+
+import models.generatorOfCoordinates;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.data.xy.XYDataset;
-import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
 
@@ -22,35 +22,84 @@ import org.jfree.data.xy.XYSeriesCollection;
  *
  */
 public class MainFrame extends JFrame {
-	private JMenu file;
-	private JMenu options;
-	private JMenuBar mainMenu;
+	private JMenu menuFile;
+	private JMenu menuOptions;
+    private JMenu testMenu;
+	private JMenuBar mainMenuBar;
+
+    private JMenuItem testMenuItem1;
+
 	private JFreeChart rollerDiagrammer;
 	private ChartPanel contentChartPanel;
-	private XYDataset dataset;
+	private XYSeriesCollection dataset;
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -1587654314948932245L;
 	
 	private void createMenu(){
-		mainMenu = new JMenuBar();
-		file = new JMenu("Файл");
-		options = new JMenu("Настройки");
-		file.add(new JMenuItem("Подключить"));
-		file.add(new JSeparator());
-		file.add(new JMenuItem("Выход"));
-		mainMenu.add(file);
-		options.add(new JMenuItem("Emptyness"));
-		mainMenu.add(options);
-		setJMenuBar(mainMenu);
+		mainMenuBar = new JMenuBar();
+
+		menuFile = new JMenu("Файл");
+        menuFile.add(new JMenuItem("Подключить"));
+		menuFile.add(new JSeparator());
+		menuFile.add(new JMenuItem("Выход"));
+        mainMenuBar.add(menuFile);
+
+        menuOptions = new JMenu("Настройки");
+		menuOptions.add(new JMenuItem("Emptyness"));
+		mainMenuBar.add(menuOptions);
+
+        testMenu = new JMenu("Тестовое меню");
+        testMenuItem1 = new JMenuItem("Тестовое добавление элементов 1");
+        testMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                testMenuItem1ActionPerformed(evt);
+            }
+        });
+        testMenu.add(testMenuItem1);
+        mainMenuBar.add(testMenu);
+
+
+		setJMenuBar(mainMenuBar);
+
+        //startServer.addActionListener(new java.awt.event.ActionListener() {
+        //    public void actionPerformed(java.awt.event.ActionEvent evt) {
+        //        startServerActionPerformed(evt);
+        //   }
+        //});
 	}
-	
-	private void createChartField(){
-		dataset = (XYDataset)((XYSeriesCollection) new XYSeriesCollection());
+
+
+    // -----------------------------------------------------------------------------------------------------------------
+    // обработчики нажатий
+
+    private void testMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {
+        //TODO обработчик нажатия
+    }
+
+
+
+
+
+
+    // обработчики нажатий
+    //------------------------------------------------------------------------------------------------------------------
+
+
+
+
+    private void createChartField(){
+        dataset = new XYSeriesCollection();
 		rollerDiagrammer = ChartFactory.createXYLineChart(null, null, null, dataset, PlotOrientation.VERTICAL, false, false, false);
 		contentChartPanel = new ChartPanel(rollerDiagrammer);
 		setContentPane(contentChartPanel);
+
+        //XYSeries series1 = new XYSeries("first");
+        //series1.add(5,10);
+        //series1.add(4,11);
+        //dataset.addSeries(series1);
+
 	}
 	
 	private void createGUI(){
@@ -60,10 +109,8 @@ public class MainFrame extends JFrame {
 	}
 	public MainFrame(String title){
 		super(title);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 		createGUI();
+
 	}
 }
-
-
-//TODO приделать стандартную реакцию на закрытие по крестику как завершение работы программы
-//т.е. если сейчас закрываешь прогрмму - окно исчезает, но висеть в памяти остается

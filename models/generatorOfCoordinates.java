@@ -5,7 +5,7 @@ import java.util.Random;
 /**
  * @author  KhaosKat
  */
-public class generatorOfCoordinates {
+public class GeneratorOfCoordinates {
     static Random random = new Random();
 
 

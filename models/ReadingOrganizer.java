@@ -8,7 +8,7 @@ import java.util.TimerTask;
  */
 public class ReadingOrganizer {
     private static float time = 3; // сколько секунд длится считывание
-    private static int frequency = 100; //in milliseconds
+    private static int frequency = 200; //in milliseconds
     private static int count = 0; //количество прочитанных значений
     private static boolean reading = false;
 

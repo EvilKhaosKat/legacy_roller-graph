@@ -3,6 +3,7 @@
  */
 package views;
 
+import device.si30.SI30Counter;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -10,6 +11,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JSeparator;
 
 import models.DrawingOrganizer;
+import models.MainContainer;
 import models.ReadingOrganizer;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
@@ -17,6 +19,7 @@ import org.jfree.chart.ChartPanel;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.xy.XYSeriesCollection;
 
+import device.si30.SI30Counter;
 
 /**
  * @author LAP
@@ -30,6 +33,7 @@ public class MainFrame extends JFrame {
 
     private JMenuItem testMenuItem1;
     private JMenuItem testMenuItem2;
+    private JMenuItem connectMenuItem;
 
 	private JFreeChart rollerDiagrammer;
 	private ChartPanel contentChartPanel;
@@ -43,7 +47,18 @@ public class MainFrame extends JFrame {
 		mainMenuBar = new JMenuBar();
 
 		menuFile = new JMenu("Файл");
-        menuFile.add(new JMenuItem("Подключить"));
+        
+        connectMenuItem = new JMenuItem("Подключить");
+        connectMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                connectMenuItemActionPerfomed(evt);
+            }
+        });
+        menuFile.add(connectMenuItem);
+        
+        
+        
+        //connectMenuItemActionPerfomed
 		menuFile.add(new JSeparator());
 		menuFile.add(new JMenuItem("Выход"));
         mainMenuBar.add(menuFile);
@@ -60,7 +75,7 @@ public class MainFrame extends JFrame {
             }
         });
         testMenu.add(testMenuItem1);
-        testMenuItem2 = new JMenuItem("Отрисовать элементы");
+        testMenuItem2 = new JMenuItem("Тест");
         testMenuItem2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 testMenuItem2ActionPerformed(evt);
@@ -95,7 +110,11 @@ public class MainFrame extends JFrame {
         //DrawingOrganizer.startDrawing();
     }
 
-
+    private void connectMenuItemActionPerfomed(java.awt.event.ActionEvent evt) {
+        SI30Counter si30Counter = MainContainer.getSi30Counter();
+        si30Counter.connect();
+        System.out.println("Connected");
+    }
 
 
     // обработчики нажатий

@@ -7,7 +7,8 @@ package models;
  */
 public class ReaderOfCoordinates {
     public static void readCoordinate() {
-
-        MainContainer.getListOfCoordinates().add(TempClassIntegerDataGetter.getInt());
+        MainContainer.getListOfCoordinates().add(MainContainer.getSi30Counter().readCounterValue());
+        //TODO переделать 
+        //MainContainer.getListOfCoordinates().add(TempClassIntegerDataGetter.getInt());
     }
 }

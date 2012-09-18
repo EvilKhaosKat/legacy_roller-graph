@@ -7,7 +7,7 @@ import java.util.TimerTask;
  * организует чтение всех необходимых данных. с определенной частотой
  */
 public class ReadingOrganizer {
-    private static float time = 3; // сколько секунд длится считывание
+    private static float time = 10; // сколько секунд длится считывание
     private static int frequency = 200; //in milliseconds
     private static int count = 0; //количество прочитанных значений
     private static boolean reading = false;
@@ -21,6 +21,7 @@ public class ReadingOrganizer {
         MainContainer.getListOfCoordinates().clear();
         count=0;
         timer = new Timer();
+        task=new ReadingTimerTask();
         timer.scheduleAtFixedRate(task,0,frequency);
         reading = true;
     }

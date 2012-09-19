@@ -1,7 +1,7 @@
-package models;
+package models.oldVersion;
 
-import models.ReaderOfCoordinates;
-import models.ReadingOrganizer;
+import models.oldVersion.ReaderOfCoordinates;
+import models.oldVersion.ReadingOrganizer;
 
 import java.util.TimerTask;
 

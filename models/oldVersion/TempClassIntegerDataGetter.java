@@ -1,4 +1,4 @@
-package models;
+package models.oldVersion;
 
 /**
  * вместо этого класса будет класс который напрямую связан с протоколом

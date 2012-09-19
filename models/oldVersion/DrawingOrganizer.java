@@ -1,4 +1,4 @@
-package models;
+package models.oldVersion;
 
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;

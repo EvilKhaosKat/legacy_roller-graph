@@ -1,4 +1,6 @@
-package models;
+package models.oldVersion;
+
+import models.MainContainer;
 
 /**
  * считывает значение со счетчик, записывая в LinkedList

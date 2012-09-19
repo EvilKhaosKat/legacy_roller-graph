@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package views;
 
@@ -10,9 +10,9 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JSeparator;
 
-import models.DrawingOrganizer;
+import models.oldVersion.DrawingOrganizer;
 import models.MainContainer;
-import models.ReadingOrganizer;
+import models.oldVersion.ReadingOrganizer;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.ChartPanel;
@@ -20,34 +20,36 @@ import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.xy.XYSeriesCollection;
 
 import device.si30.SI30Counter;
+import models.Measurement;
+import models.newVersion.drawer.Drawer;
+import models.newVersion.reader.Reader;
 
 /**
  * @author LAP
  *
  */
 public class MainFrame extends JFrame {
-	private JMenu menuFile;
-	private JMenu menuOptions;
-    private JMenu testMenu;
-	private JMenuBar mainMenuBar;
 
+    private JMenu menuFile;
+    private JMenu menuOptions;
+    private JMenu testMenu;
+    private JMenuBar mainMenuBar;
     private JMenuItem testMenuItem1;
     private JMenuItem testMenuItem2;
     private JMenuItem connectMenuItem;
+    private JFreeChart rollerDiagrammer;
+    private ChartPanel contentChartPanel;
+    private XYSeriesCollection dataset;
+    /**
+     *
+     */
+    private static final long serialVersionUID = -1587654314948932245L;
 
-	private JFreeChart rollerDiagrammer;
-	private ChartPanel contentChartPanel;
-	private XYSeriesCollection dataset;
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -1587654314948932245L;
-	
-	private void createMenu(){
-		mainMenuBar = new JMenuBar();
+    private void createMenu() {
+        mainMenuBar = new JMenuBar();
 
-		menuFile = new JMenu("Файл");
-        
+        menuFile = new JMenu("Файл");
+
         connectMenuItem = new JMenuItem("Подключить");
         connectMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -55,17 +57,17 @@ public class MainFrame extends JFrame {
             }
         });
         menuFile.add(connectMenuItem);
-        
-        
-        
+
+
+
         //connectMenuItemActionPerfomed
-		menuFile.add(new JSeparator());
-		menuFile.add(new JMenuItem("Выход"));
+        menuFile.add(new JSeparator());
+        menuFile.add(new JMenuItem("Выход"));
         mainMenuBar.add(menuFile);
 
         menuOptions = new JMenu("Настройки");
-		menuOptions.add(new JMenuItem("Emptyness"));
-		mainMenuBar.add(menuOptions);
+        menuOptions.add(new JMenuItem("Emptyness"));
+        mainMenuBar.add(menuOptions);
 
         testMenu = new JMenu("Тестовое меню");
         testMenuItem1 = new JMenuItem("Тестовое чтение элементов 1");
@@ -85,28 +87,46 @@ public class MainFrame extends JFrame {
         mainMenuBar.add(testMenu);
 
 
-		setJMenuBar(mainMenuBar);
+        setJMenuBar(mainMenuBar);
 
         //startServer.addActionListener(new java.awt.event.ActionListener() {
         //    public void actionPerformed(java.awt.event.ActionEvent evt) {
         //        startServerActionPerformed(evt);
         //   }
         //});
-	}
+    }
 
+    private void createChartField() {
+        dataset = new XYSeriesCollection();
+        DrawingOrganizer.setDataset(dataset);
+
+        rollerDiagrammer = ChartFactory.createXYLineChart(null, null, null, dataset, PlotOrientation.VERTICAL, false, false, false);
+        contentChartPanel = new ChartPanel(rollerDiagrammer);
+        setContentPane(contentChartPanel);
+
+        //XYSeries series1 = new XYSeries("first");
+        //series1.add(5,10);
+        //series1.add(4,11);
+        //dataset.addSeries(series1);
+
+    }
 
     // -----------------------------------------------------------------------------------------------------------------
     // обработчики нажатий
-
     private void testMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {
         //TODO обработчик нажатия
-        ReadingOrganizer.startReading();
+        //ReadingOrganizer.startReading();
+        Measurement measurement = new Measurement();
+        MainContainer.getListMeasurements().add(measurement);
+        Reader r=new models.newVersion.reader.Reader(measurement);
+        r.startReading();
+        Drawer d=new Drawer(r, dataset);
+        d.startDrawing();
         //DrawingOrganizer.startDrawing();
     }
 
     private void testMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {
         //TODO обработчик нажатия
-
         //DrawingOrganizer.startDrawing();
     }
 
@@ -116,38 +136,18 @@ public class MainFrame extends JFrame {
         System.out.println("Connected");
     }
 
-
     // обработчики нажатий
     //------------------------------------------------------------------------------------------------------------------
+    private void createGUI() {
+        createMenu();
+        createChartField();
+        pack();
+    }
 
-
-
-
-    private void createChartField(){
-        dataset = new XYSeriesCollection();
-        DrawingOrganizer.setDataset(dataset);
-
-		rollerDiagrammer = ChartFactory.createXYLineChart(null, null, null, dataset, PlotOrientation.VERTICAL, false, false, false);
-		contentChartPanel = new ChartPanel(rollerDiagrammer);
-		setContentPane(contentChartPanel);
-
-        //XYSeries series1 = new XYSeries("first");
-        //series1.add(5,10);
-        //series1.add(4,11);
-        //dataset.addSeries(series1);
-
-	}
-	
-	private void createGUI(){
-		createMenu();
-		createChartField();
-		pack();
-	}
-	public MainFrame(String title){
-		super(title);
+    public MainFrame(String title) {
+        super(title);
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-		createGUI();
+        createGUI();
 
-	}
-
+    }
 }

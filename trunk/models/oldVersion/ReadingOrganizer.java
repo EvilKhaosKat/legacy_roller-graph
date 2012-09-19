@@ -1,7 +1,8 @@
-package models;
+package models.oldVersion;
 
 import java.util.Timer;
 import java.util.TimerTask;
+import models.MainContainer;
 
 /**
  * организует чтение всех необходимых данных. с определенной частотой
@@ -14,7 +15,7 @@ public class ReadingOrganizer {
 
     public static Timer timer;
     /** Задача таймера, т.е. действия которые он выполнит при срабатывании */
-    public static TimerTask task  = new ReadingTimerTask();
+    public static TimerTask task;//  = new ReadingTimerTask();
 
 
     public static void startReading() {
@@ -32,7 +33,7 @@ public class ReadingOrganizer {
     }
 
 
-
+    //геттеры и сеттеры
     public static float getTime() {
         return time;
     }

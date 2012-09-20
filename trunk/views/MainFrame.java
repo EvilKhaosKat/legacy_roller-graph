@@ -69,18 +69,18 @@ public class MainFrame extends JFrame {
         menuOptions.add(new JMenuItem("Emptyness"));
         mainMenuBar.add(menuOptions);
 
-        testMenu = new JMenu("Тестовое меню");
-        testMenuItem1 = new JMenuItem("Тестовое чтение элементов 1");
+        testMenu = new JMenu("Измерение");
+        testMenuItem1 = new JMenuItem("Пуск");
         testMenuItem1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                testMenuItem1ActionPerformed(evt);
+                menuItemStartActionPerformed(evt);
             }
         });
         testMenu.add(testMenuItem1);
-        testMenuItem2 = new JMenuItem("Тест");
+        testMenuItem2 = new JMenuItem("Стоп");
         testMenuItem2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                testMenuItem2ActionPerformed(evt);
+                menuItemStopActionPerformed(evt);
             }
         });
         testMenu.add(testMenuItem2);
@@ -113,7 +113,7 @@ public class MainFrame extends JFrame {
 
     // -----------------------------------------------------------------------------------------------------------------
     // обработчики нажатий
-    private void testMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {
+    private void menuItemStartActionPerformed(java.awt.event.ActionEvent evt) {
         //TODO обработчик нажатия
         //ReadingOrganizer.startReading();
         Measurement measurement = new Measurement();
@@ -125,9 +125,10 @@ public class MainFrame extends JFrame {
         //DrawingOrganizer.startDrawing();
     }
 
-    private void testMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {
+    private void menuItemStopActionPerformed(java.awt.event.ActionEvent evt) {
         //TODO обработчик нажатия
         //DrawingOrganizer.startDrawing();
+        MainContainer.isReading=false;
     }
 
     private void connectMenuItemActionPerfomed(java.awt.event.ActionEvent evt) {

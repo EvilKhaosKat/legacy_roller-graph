@@ -22,7 +22,7 @@ public class ReadingTimerTask extends TimerTask {
     public void run() {
 
 
-        if (reader.getCount()>reader.getTime()*1000/reader.getFrequency()) {
+        if (/*reader.getCount()>reader.getTime()*1000/reader.getFrequency()*/!MainContainer.isReading) {
             System.out.println("чтение завершено");
             //Drawer.drawGraphic();
             //TODO для варианта сначала прочитать потом отрисовать - добавить сюда вызов отрисовщика

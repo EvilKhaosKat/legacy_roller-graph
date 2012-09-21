@@ -25,7 +25,7 @@ public class MainContainer {
 
     //TODO тупая идея, спору нет, но это лучшее что я сейчас придумать смог
     public static boolean isReading=false;
-    
+    public static double minSpeed=2.75;
     
     //геттеры и сеттеры
     public static List<Measurement> getListMeasurements() {

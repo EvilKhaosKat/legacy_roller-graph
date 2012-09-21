@@ -26,10 +26,10 @@ public class DrawerTimerTask extends TimerTask {
     @Override
     public void run() {
         Double temp;
-        if (drawer.getCount()<drawer.getMeasurement().getListSpeedsData().size()) {
-            for (int i=drawer.getCount();i<drawer.getMeasurement().getListSpeedsData().size();i++) {
+        if (drawer.getCount()<drawer.getMeasurement().getListNeedfulSpeedsData().size()) {
+            for (int i=drawer.getCount();i<drawer.getMeasurement().getListNeedfulSpeedsData().size();i++) {
                 temp = (double)i*drawer.getFrequency()/1000;
-                series1.add(temp,drawer.getMeasurement().getListSpeedsData().get(i));
+                series1.add(temp,drawer.getMeasurement().getListNeedfulSpeedsData().get(i));
                 drawer.setCount(drawer.getCount()+1);
             }
         } else {

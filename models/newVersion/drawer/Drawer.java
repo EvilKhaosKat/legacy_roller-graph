@@ -16,7 +16,7 @@ public class Drawer {
     private XYSeriesCollection dataset;
     
     private int count = 0; //количество отрисованных значений
-    private int frequency = 1000;
+    private int frequency = 500;
     
     TimerTask task;
     

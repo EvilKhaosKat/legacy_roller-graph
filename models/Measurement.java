@@ -13,26 +13,40 @@ public class Measurement {
     private List<Integer> listRawDataNotSync = new LinkedList();
     private List<Integer> listRawData =
             Collections.synchronizedList(listRawDataNotSync);
-    private List<Integer> listSpeedsNotSync = new LinkedList();
-    private List<Integer> listSpeedsData =
+    private List<Double> listSpeedsNotSync = new LinkedList();
+    private List<Double> listSpeedsData =
             Collections.synchronizedList(listSpeedsNotSync);
-    private double conversionRawToSpeedCoefficient = 1;
+    private List<Double> listNeedfulSpeedsNotSync = new LinkedList();
+    private List<Double> listNeedfulSpeedsData =
+            Collections.synchronizedList(listNeedfulSpeedsNotSync);
+
+  
+    private double conversionRawToSpeedCoefficient = 0.05;
+    
 
     public void addMeasure(int m) {
         listRawData.add(m);
         calculateSpeed();
+        
     }
 
     private void calculateSpeed() {
-        int speed = 0;
+        double speed = 0;
         if (listRawData.size() == 1) {
             speed = 0;
+            
         } else {
-            speed = (int) ((listRawData.get(listRawData.size()-1) - listRawData.get(listRawData.size() - 2)) * conversionRawToSpeedCoefficient);
-
+        	double delta = listRawData.get(listRawData.size()-1) - listRawData.get(listRawData.size() - 2);
+        	System.out.println("delta="+delta);
+            speed = delta*conversionRawToSpeedCoefficient;
+            
         }
         System.out.println("speed:"+speed);
         listSpeedsData.add(speed);
+        if (speed>=MainContainer.minSpeed) {
+        	listNeedfulSpeedsData.add(speed);
+        	System.out.println("add to needful list");
+        } else {System.out.println("not enough speed"); }
 
     }
 
@@ -41,7 +55,7 @@ public class Measurement {
         return listRawData;
     }
 
-    public List<Integer> getListSpeedsData() {
+    public List<Double> getListSpeedsData() {
         return listSpeedsData;
     }
 
@@ -52,4 +66,11 @@ public class Measurement {
     public void setConversionRawToSpeedCoefficient(double conversionRawToSpeedCoefficient) {
         this.conversionRawToSpeedCoefficient = conversionRawToSpeedCoefficient;
     }
+
+
+	public List<Double> getListNeedfulSpeedsData() {
+		return listNeedfulSpeedsData;
+	}
+    
+    
 }

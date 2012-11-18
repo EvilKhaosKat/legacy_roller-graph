@@ -31,6 +31,7 @@ public class DrawerTimerTask extends TimerTask {
                 temp = (double)i*drawer.getFrequency()/1000;
                 series1.add(temp,drawer.getMeasurement().getListNeedfulSpeedsData().get(i));
                 drawer.setCount(drawer.getCount()+1);
+                MainContainer.getMainFrame().setSpeedCaption(drawer.getMeasurement().getListNeedfulSpeedsData().get(i));
             }
         } else {
             if (!MainContainer.isReading) this.cancel();

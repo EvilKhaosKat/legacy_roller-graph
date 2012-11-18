@@ -21,7 +21,7 @@ public class Measurement {
             Collections.synchronizedList(listNeedfulSpeedsNotSync);
 
   
-    private double conversionRawToSpeedCoefficient = 0.05;
+    private double conversionRawToSpeedCoefficient = 0.9375; // 1/128=0.0078125;*60*2
     
 
     public void addMeasure(int m) {

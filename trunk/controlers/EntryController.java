@@ -3,6 +3,7 @@
  */
 package controlers;
 
+import models.MainContainer;
 import views.MainFrame;
 
 /**
@@ -18,6 +19,7 @@ public class EntryController {
 		// TODO Auto-generated method stub
 		test = new MainFrame("Roller graph");
 		test.setVisible(true);
+		MainContainer.setMainFrame(test);
 	}
 
 }

@@ -5,6 +5,8 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
+import views.MainFrame;
+
 /**
  * @author KhaosKat
  */
@@ -23,6 +25,8 @@ public class MainContainer {
             Collections.synchronizedList(listMeasurementsNotSync);
     private static SI30Counter si30Counter = new SI30Counter();
 
+    private static MainFrame mainFrame;
+    
     //TODO тупая идея, спору нет, но это лучшее что я сейчас придумать смог
     public static boolean isReading=false;
     public static double minSpeed=2.75;
@@ -39,4 +43,13 @@ public class MainContainer {
     public static List<Integer> getListOfCoordinates() {
         return listOfCoordinates;
     }
+    
+    public static MainFrame getMainFrame() {
+    	return mainFrame;
+    }
+    
+    public static void setMainFrame (MainFrame mf) {
+    	mainFrame=mf;
+    }
+    
 }

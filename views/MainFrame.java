@@ -3,12 +3,23 @@
  */
 package views;
 
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+
 import device.si30.SI30Counter;
+
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.JApplet;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JPanel;
 import javax.swing.JSeparator;
+import javax.swing.JSplitPane;
+import javax.swing.JTextField;
 
 import models.oldVersion.DrawingOrganizer;
 import models.MainContainer;
@@ -39,12 +50,26 @@ public class MainFrame extends JFrame {
     private JMenuItem connectMenuItem;
     private JFreeChart rollerDiagrammer;
     private ChartPanel contentChartPanel;
+    private JPanel chartPanel;
     private XYSeriesCollection dataset;
+    private JPanel toolPanel;
+    private JLabel speed;
+    private JLabel peakSpeed;
     /**
      *
      */
     private static final long serialVersionUID = -1587654314948932245L;
 
+    private void createToolPanel() {
+    	toolPanel = new JPanel();
+    	toolPanel.setLayout(new BoxLayout(toolPanel, BoxLayout.PAGE_AXIS));
+    	speed = new JLabel("Speed");
+    	toolPanel.add(speed);
+    	peakSpeed = new JLabel("Peak speed:");
+    	toolPanel.add(peakSpeed);
+    	this.add(toolPanel, BorderLayout.LINE_END);
+    }
+    
     private void createMenu() {
         mainMenuBar = new JMenuBar();
 
@@ -101,8 +126,11 @@ public class MainFrame extends JFrame {
         DrawingOrganizer.setDataset(dataset);
 
         rollerDiagrammer = ChartFactory.createXYLineChart(null, null, null, dataset, PlotOrientation.VERTICAL, false, false, false);
+        chartPanel = new JPanel();
+        chartPanel.setLayout(new BorderLayout());
         contentChartPanel = new ChartPanel(rollerDiagrammer);
-        setContentPane(contentChartPanel);
+        chartPanel.add(contentChartPanel, BorderLayout.CENTER);
+        setContentPane(chartPanel);
 
         //XYSeries series1 = new XYSeries("first");
         //series1.add(5,10);
@@ -141,8 +169,10 @@ public class MainFrame extends JFrame {
     //------------------------------------------------------------------------------------------------------------------
     private void createGUI() {
         createMenu();
+        setSize(410, 320);
         createChartField();
-        pack();
+        createToolPanel();
+        //pack();
     }
 
     public MainFrame(String title) {
@@ -150,5 +180,11 @@ public class MainFrame extends JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         createGUI();
 
+    }
+    
+    public void setSpeedCaption(double newSpeed) {
+    	Double d = new Double(newSpeed);
+    	System.out.println("Setting current speed:"+d);
+    	speed.setText("Speed: "+d.toString());
     }
 }

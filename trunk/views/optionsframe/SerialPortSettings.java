@@ -2,10 +2,13 @@ package views.optionsframe;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.util.List;
 
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+
+import connection.ComPortPreferences;
 
 
 public class SerialPortSettings extends JPanel {
@@ -33,26 +36,32 @@ public class SerialPortSettings extends JPanel {
 		gbc.gridy = 0;
 		gbc.weightx = 1;
 		gbc.anchor = GridBagConstraints.LINE_START;
+		
 		add(new JLabel("Доступные com порты"), gbc);
+		setSerialPortsContent();
 		gbc.gridy++;
 		gbc.fill = GridBagConstraints.BOTH;
 		add(serialPorts, gbc);
 		gbc.gridy++;
+		
 		add(new JLabel("Скорость соединения"), gbc);
 		setSpeedsContent();
 		gbc.gridy++;
 		add(speeds, gbc);
 		gbc.gridy++;
+		
 		add(new JLabel("Биты данных"), gbc);
 		gbc.gridy++;
 		setDataBitsContent();
 		add(dataBits, gbc);
 		gbc.gridy++;
+		
 		add(new JLabel("Биты чётности"),gbc);
 		gbc.gridy++;
 		setParityBitsContent();
 		add(parity, gbc);
 		gbc.gridy++;
+		
 		add(new JLabel("Стоп биты"), gbc);
 		gbc.gridy++;
 		gbc.weighty = 1;
@@ -62,8 +71,17 @@ public class SerialPortSettings extends JPanel {
 		add(stopBits, gbc);
 	}
 	
+	private void setSerialPortsContent() {
+		List<String> serialPortsList = ComPortPreferences.getComPortsAsStringList();
+		
+		for (String serialPortName : serialPortsList) {
+			serialPorts.addItem(serialPortName);
+		}
+	}
+
 	private void setSpeedsContent() {
 		// Скорость должна быть здесь
+		speeds.addItem("115200");
 	}
 	
 	private void setDataBitsContent() {
@@ -76,6 +94,7 @@ public class SerialPortSettings extends JPanel {
 	}
 	
 	private void setParityBitsContent() {
+		//TODO добавить parity bits, хотя бы SerialPort.PARITY_NONE; его будет достаточно
 	}
 	
 	private void setStopBitsContent() {

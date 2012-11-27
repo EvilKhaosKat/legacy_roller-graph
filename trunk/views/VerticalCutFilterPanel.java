@@ -1,6 +1,3 @@
-/**
- * 
- */
 package views;
 
 import java.awt.GridBagConstraints;
@@ -22,7 +19,7 @@ public class VerticalCutFilterPanel extends JPanel{
 	private JSpinner rightCutSpinner;
 	
 	public VerticalCutFilterPanel() {
-		leftCountLabel = new JLabel("Количество с лева:");
+		leftCountLabel = new JLabel("Количество слева:");
 		rightCountLabel = new JLabel("Количество справа:");
 		leftCutSpinner = new JSpinner(new SpinnerNumberModel());
 		rightCutSpinner = new JSpinner(new SpinnerNumberModel());

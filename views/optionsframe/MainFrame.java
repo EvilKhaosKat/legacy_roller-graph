@@ -11,10 +11,6 @@ import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.DefaultCategoryDataset;
 
 /**
- * 
- */
-
-/**
  * @author LAP
  *
  */

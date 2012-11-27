@@ -31,6 +31,7 @@ import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.xy.XYSeriesCollection;
 
 import device.si30.SI30Counter;
+import javax.swing.JButton;
 import models.Measurement;
 import models.newVersion.drawer.Drawer;
 import models.newVersion.reader.Reader;
@@ -55,18 +56,22 @@ public class MainFrame extends JFrame {
     private JPanel toolPanel;
     private JLabel speed;
     private JLabel peakSpeed;
+    private JButton startAndStopButton;
     /**
      *
      */
     private static final long serialVersionUID = -1587654314948932245L;
 
     private void createToolPanel() {
-    	toolPanel = new JPanel();
+        toolPanel = new ToolPanel();
+    	/*toolPanel = new JPanel();
     	toolPanel.setLayout(new BoxLayout(toolPanel, BoxLayout.PAGE_AXIS));
     	speed = new JLabel("Speed");
     	toolPanel.add(speed);
     	peakSpeed = new JLabel("Peak speed:");
     	toolPanel.add(peakSpeed);
+        startAndStopButton = new JButton("Start");
+        toolPanel.add(startAndStopButton);*/
     	this.add(toolPanel, BorderLayout.LINE_END);
     }
     
@@ -141,7 +146,7 @@ public class MainFrame extends JFrame {
 
     // -----------------------------------------------------------------------------------------------------------------
     // обработчики нажатий
-    private void menuItemStartActionPerformed(java.awt.event.ActionEvent evt) {
+    public void menuItemStartActionPerformed(java.awt.event.ActionEvent evt) {
         //TODO обработчик нажатия
         //ReadingOrganizer.startReading();
         Measurement measurement = new Measurement();
@@ -153,7 +158,7 @@ public class MainFrame extends JFrame {
         //DrawingOrganizer.startDrawing();
     }
 
-    private void menuItemStopActionPerformed(java.awt.event.ActionEvent evt) {
+    public void menuItemStopActionPerformed(java.awt.event.ActionEvent evt) {
         //TODO обработчик нажатия
         //DrawingOrganizer.startDrawing();
         MainContainer.isReading=false;
@@ -185,6 +190,7 @@ public class MainFrame extends JFrame {
     public void setSpeedCaption(double newSpeed) {
     	Double d = new Double(newSpeed);
     	System.out.println("Setting current speed:"+d);
-    	speed.setText("Speed: "+d.toString());
+        ((ToolPanel) toolPanel).setSpeedCaption(d.toString());
+    	//speed.setText("Speed: "+d.toString());
     }
 }

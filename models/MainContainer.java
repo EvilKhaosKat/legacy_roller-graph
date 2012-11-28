@@ -1,5 +1,6 @@
 package models;
 
+import connection.ComPortPreferences;
 import device.si30.SI30Counter;
 import java.util.Collections;
 import java.util.LinkedList;
@@ -31,6 +32,17 @@ public class MainContainer {
     public static boolean isReading=false;
     public static double minSpeed=2.75;
     
+    
+    private static ComPortPreferences comPortPreferences;
+    
+    public static void setComPortName(String comPortName) {
+        if (comPortPreferences == null) {
+            comPortPreferences = new ComPortPreferences();
+        }
+        comPortPreferences.setPortName(comPortName);
+        System.out.println("Com port setted to "+comPortName);
+    }
+    
     //геттеры и сеттеры
     public static List<Measurement> getListMeasurements() {
         return listMeasurements;
@@ -51,5 +63,14 @@ public class MainContainer {
     public static void setMainFrame (MainFrame mf) {
     	mainFrame=mf;
     }
+
+    public static ComPortPreferences getComPortPreferences() {
+        return comPortPreferences;
+    }
+
+    public static void setComPortPreferences(ComPortPreferences newComPortPreferences) {
+        comPortPreferences = newComPortPreferences;
+    }
+    
     
 }

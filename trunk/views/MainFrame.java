@@ -1,8 +1,6 @@
-/**
- *
- */
 package views;
 
+import connection.ComPortConnection;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 
@@ -35,6 +33,7 @@ import javax.swing.JButton;
 import models.Measurement;
 import models.newVersion.drawer.Drawer;
 import models.newVersion.reader.Reader;
+import views.optionsframe.SerialPortSettings;
 
 /**
  * @author LAP
@@ -48,6 +47,7 @@ public class MainFrame extends JFrame {
     private JMenuBar mainMenuBar;
     private JMenuItem testMenuItem1;
     private JMenuItem testMenuItem2;
+    private JMenuItem menuOptionsItem1;
     private JMenuItem connectMenuItem;
     private JFreeChart rollerDiagrammer;
     private ChartPanel contentChartPanel;
@@ -64,17 +64,17 @@ public class MainFrame extends JFrame {
 
     private void createToolPanel() {
         toolPanel = new ToolPanel();
-    	/*toolPanel = new JPanel();
-    	toolPanel.setLayout(new BoxLayout(toolPanel, BoxLayout.PAGE_AXIS));
-    	speed = new JLabel("Speed");
-    	toolPanel.add(speed);
-    	peakSpeed = new JLabel("Peak speed:");
-    	toolPanel.add(peakSpeed);
-        startAndStopButton = new JButton("Start");
-        toolPanel.add(startAndStopButton);*/
-    	this.add(toolPanel, BorderLayout.LINE_END);
+        /*toolPanel = new JPanel();
+         toolPanel.setLayout(new BoxLayout(toolPanel, BoxLayout.PAGE_AXIS));
+         speed = new JLabel("Speed");
+         toolPanel.add(speed);
+         peakSpeed = new JLabel("Peak speed:");
+         toolPanel.add(peakSpeed);
+         startAndStopButton = new JButton("Start");
+         toolPanel.add(startAndStopButton);*/
+        this.add(toolPanel, BorderLayout.LINE_END);
     }
-    
+
     private void createMenu() {
         mainMenuBar = new JMenuBar();
 
@@ -96,7 +96,16 @@ public class MainFrame extends JFrame {
         mainMenuBar.add(menuFile);
 
         menuOptions = new JMenu("Настройки");
-        menuOptions.add(new JMenuItem("Emptyness"));
+        menuOptionsItem1 = new JMenuItem("Настройки com порта");
+        menuOptionsItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JFrame test = new JFrame("Настройки com порта");
+                test.getContentPane().add(new SerialPortSettings());
+                test.pack();
+		test.setVisible(true);
+            }
+        });
+        menuOptions.add(menuOptionsItem1);
         mainMenuBar.add(menuOptions);
 
         testMenu = new JMenu("Измерение");
@@ -151,9 +160,9 @@ public class MainFrame extends JFrame {
         //ReadingOrganizer.startReading();
         Measurement measurement = new Measurement();
         MainContainer.getListMeasurements().add(measurement);
-        Reader r=new models.newVersion.reader.Reader(measurement);
+        Reader r = new models.newVersion.reader.Reader(measurement);
         r.startReading();
-        Drawer d=new Drawer(r, dataset);
+        Drawer d = new Drawer(r, dataset);
         d.startDrawing();
         //DrawingOrganizer.startDrawing();
     }
@@ -161,11 +170,15 @@ public class MainFrame extends JFrame {
     public void menuItemStopActionPerformed(java.awt.event.ActionEvent evt) {
         //TODO обработчик нажатия
         //DrawingOrganizer.startDrawing();
-        MainContainer.isReading=false;
+        MainContainer.isReading = false;
     }
 
     private void connectMenuItemActionPerfomed(java.awt.event.ActionEvent evt) {
         SI30Counter si30Counter = MainContainer.getSi30Counter();
+        if (MainContainer.getComPortPreferences() != null) {
+            System.out.println("Using not standart com port pref." + MainContainer.getComPortPreferences().getPortName());
+            ((ComPortConnection) si30Counter.getConnection()).setSerialPortPreferences(MainContainer.getComPortPreferences());
+        }
         si30Counter.connect();
         System.out.println("Connected");
     }
@@ -186,11 +199,11 @@ public class MainFrame extends JFrame {
         createGUI();
 
     }
-    
+
     public void setSpeedCaption(double newSpeed) {
-    	Double d = new Double(newSpeed);
-    	System.out.println("Setting current speed:"+d);
+        Double d = new Double(newSpeed);
+        System.out.println("Setting current speed:" + d);
         ((ToolPanel) toolPanel).setSpeedCaption(d.toString());
-    	//speed.setText("Speed: "+d.toString());
+        //speed.setText("Speed: "+d.toString());
     }
 }

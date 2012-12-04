@@ -20,7 +20,7 @@ public class ToolPanel extends javax.swing.JPanel {
     }
 
     public void setSpeedCaption(String speed) {
-        speedLabel.setText(speed);
+        //speedLabel.setText(speed);
     }
     
     /**
@@ -32,26 +32,12 @@ public class ToolPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
-        speedLabel = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        minSpeedLabel = new javax.swing.JLabel();
-        maxSpeedLabel = new javax.swing.JLabel();
         startAndStopButton = new javax.swing.JButton();
 
-        jLabel1.setText("Speed:");
+        setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        setMaximumSize(new java.awt.Dimension(300, 60));
 
-        speedLabel.setText("0");
-
-        jLabel2.setText("Min speed:");
-
-        jLabel3.setText("Max speed:");
-
-        minSpeedLabel.setText("0");
-
-        maxSpeedLabel.setText("0");
-
+        startAndStopButton.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         startAndStopButton.setText("Start");
         startAndStopButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -65,46 +51,21 @@ public class ToolPanel extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(startAndStopButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(minSpeedLabel))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
-                        .addComponent(maxSpeedLabel))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(speedLabel)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addComponent(startAndStopButton, javax.swing.GroupLayout.DEFAULT_SIZE, 176, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(speedLabel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(minSpeedLabel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(maxSpeedLabel))
-                .addGap(18, 18, 18)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(startAndStopButton)
-                .addContainerGap(268, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void startAndStopButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startAndStopButtonActionPerformed
         if (startAndStopButton.getText().equals("Start") ) {
+            MainContainer.getMainFrame().connectMenuItemActionPerfomed(evt);
             MainContainer.getMainFrame().menuItemStartActionPerformed(evt);
             startAndStopButton.setText("Stop");
         } else {
@@ -114,12 +75,6 @@ public class ToolPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_startAndStopButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel maxSpeedLabel;
-    private javax.swing.JLabel minSpeedLabel;
-    private javax.swing.JLabel speedLabel;
     private javax.swing.JButton startAndStopButton;
     // End of variables declaration//GEN-END:variables
 }

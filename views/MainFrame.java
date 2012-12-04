@@ -1,6 +1,7 @@
 package views;
 
 import connection.ComPortConnection;
+import controllers.Supervisor;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 
@@ -187,6 +188,7 @@ public class MainFrame extends JFrame {
         }
         si30Counter.connect();
         System.out.println("Connected");
+        Supervisor.startThatProcess();
     }
 
     // обработчики нажатий
@@ -230,16 +232,28 @@ public class MainFrame extends JFrame {
 
     private void fillLeftIndicationPanel() {
         TextPanel tempTextPanel = new TextPanel("TEXT 1");
-        leftIndicationPanel.add(tempTextPanel);
+        leftIndicationPanel.addElementPanel(tempTextPanel);
         tempTextPanel = new TextPanel("TEXT 2");
-        leftIndicationPanel.add(tempTextPanel);
+        leftIndicationPanel.addElementPanel(tempTextPanel);
         tempTextPanel = new TextPanel("TEXT 3");
-        leftIndicationPanel.add(tempTextPanel);
+        leftIndicationPanel.addElementPanel(tempTextPanel);
         
     }
 
     private void fillRightIndicationPanel() {
         TextPanel tempTextPanel = new TextPanel("TEXT 1");
-        rightIndicationPanel.add(tempTextPanel);
+        rightIndicationPanel.addElementPanel(tempTextPanel);
     }
+
+    public IndicationPanel getLeftIndicationPanel() {
+        return leftIndicationPanel;
+    }
+
+    public IndicationPanel getRightIndicationPanel() {
+        return rightIndicationPanel;
+    }
+    
+    
+    
+    
 }

@@ -214,7 +214,7 @@ public class MainFrame extends JFrame {
     public void setSpeedCaption(double newSpeed) {
         Double d = new Double(newSpeed);
         System.out.println("Setting current speed:" + d);
-        ((SpeedIndicationPanel) rightIndicationPanel.innerPanelList.get(0)).setSpeedValue(d.toString());
+        ((ValueIndicationPanel) rightIndicationPanel.innerPanelList.get(0)).setSpeedValue(d.toString());
         //((ToolPanel) toolPanel).setSpeedCaption(d.toString());
         //speed.setText("Speed: "+d.toString());
     }
@@ -252,8 +252,18 @@ public class MainFrame extends JFrame {
     }
 
     private void fillRightIndicationPanel() {
-        SpeedIndicationPanel tempSpeedIndicationPanel = new SpeedIndicationPanel();
+        ValueIndicationPanel tempSpeedIndicationPanel = new ValueIndicationPanel();
         rightIndicationPanel.addElementPanel(tempSpeedIndicationPanel);
+        
+        tempSpeedIndicationPanel = new ValueIndicationPanel("40.0","Vmin");
+        rightIndicationPanel.addElementPanel(tempSpeedIndicationPanel);
+        tempSpeedIndicationPanel = new ValueIndicationPanel("100.0","Vmax");
+        rightIndicationPanel.addElementPanel(tempSpeedIndicationPanel);
+        
+        /*tempSpeedIndicationPanel = new ValueIndicationPanel("40.0","t разгона");
+        rightIndicationPanel.addElementPanel(tempSpeedIndicationPanel);
+        tempSpeedIndicationPanel = new ValueIndicationPanel("100.0","t выбега");
+        rightIndicationPanel.addElementPanel(tempSpeedIndicationPanel);*/
         
         //TODO исправить и еще один костыль
         startAndStopButton = new JButton("Start");

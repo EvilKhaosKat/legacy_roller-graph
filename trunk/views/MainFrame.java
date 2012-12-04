@@ -36,7 +36,7 @@ import models.newVersion.reader.Reader;
 import views.optionsframe.SerialPortSettings;
 
 /**
- * @author LAP
+ * @author LAP, KhaosKat
  *
  */
 public class MainFrame extends JFrame {
@@ -57,6 +57,9 @@ public class MainFrame extends JFrame {
     private JLabel speed;
     private JLabel peakSpeed;
     private JButton startAndStopButton;
+    
+    private IndicationPanel leftIndicationPanel;
+    private IndicationPanel rightIndicationPanel;
     /**
      *
      */
@@ -144,7 +147,10 @@ public class MainFrame extends JFrame {
         chartPanel.setLayout(new BorderLayout());
         contentChartPanel = new ChartPanel(rollerDiagrammer);
         chartPanel.add(contentChartPanel, BorderLayout.CENTER);
-        setContentPane(chartPanel);
+        
+        //TODO а вот аткое насильное добавление chartPanel создало мне небольшие проблемы. i hate you xD
+        this.add(chartPanel, BorderLayout.CENTER);
+        //setContentPane(chartPanel);
 
         //XYSeries series1 = new XYSeries("first");
         //series1.add(5,10);
@@ -185,11 +191,14 @@ public class MainFrame extends JFrame {
 
     // обработчики нажатий
     //------------------------------------------------------------------------------------------------------------------
+    
     private void createGUI() {
         createMenu();
-        setSize(410, 320);
+        setSize(800, 500);
+        createLeftIndicationPanel();
         createChartField();
-        createToolPanel();
+        createRightIndicationPanel();       
+        //createToolPanel();
         //pack();
     }
 
@@ -205,5 +214,32 @@ public class MainFrame extends JFrame {
         System.out.println("Setting current speed:" + d);
         ((ToolPanel) toolPanel).setSpeedCaption(d.toString());
         //speed.setText("Speed: "+d.toString());
+    }
+
+    private void createLeftIndicationPanel() {
+        leftIndicationPanel = new IndicationPanel();
+        this.add(leftIndicationPanel, BorderLayout.LINE_START);
+        fillLeftIndicationPanel();
+    }
+
+    private void createRightIndicationPanel() {
+        rightIndicationPanel = new IndicationPanel();
+        this.add(rightIndicationPanel, BorderLayout.LINE_END);
+        fillRightIndicationPanel();
+    }
+
+    private void fillLeftIndicationPanel() {
+        TextPanel tempTextPanel = new TextPanel("TEXT 1");
+        leftIndicationPanel.add(tempTextPanel);
+        tempTextPanel = new TextPanel("TEXT 2");
+        leftIndicationPanel.add(tempTextPanel);
+        tempTextPanel = new TextPanel("TEXT 3");
+        leftIndicationPanel.add(tempTextPanel);
+        
+    }
+
+    private void fillRightIndicationPanel() {
+        TextPanel tempTextPanel = new TextPanel("TEXT 1");
+        rightIndicationPanel.add(tempTextPanel);
     }
 }

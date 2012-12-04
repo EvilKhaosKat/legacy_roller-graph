@@ -30,6 +30,7 @@ import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.xy.XYSeriesCollection;
 
 import device.si30.SI30Counter;
+import java.awt.Dimension;
 import javax.swing.JButton;
 import models.Measurement;
 import models.newVersion.drawer.Drawer;
@@ -58,7 +59,6 @@ public class MainFrame extends JFrame {
     private JLabel speed;
     private JLabel peakSpeed;
     private JButton startAndStopButton;
-    
     private IndicationPanel leftIndicationPanel;
     private IndicationPanel rightIndicationPanel;
     /**
@@ -106,7 +106,7 @@ public class MainFrame extends JFrame {
                 JFrame test = new JFrame("Настройки com порта");
                 test.getContentPane().add(new SerialPortSettings());
                 test.pack();
-		test.setVisible(true);
+                test.setVisible(true);
             }
         });
         menuOptions.add(menuOptionsItem1);
@@ -148,7 +148,7 @@ public class MainFrame extends JFrame {
         chartPanel.setLayout(new BorderLayout());
         contentChartPanel = new ChartPanel(rollerDiagrammer);
         chartPanel.add(contentChartPanel, BorderLayout.CENTER);
-        
+
         //TODO а вот аткое насильное добавление chartPanel создало мне небольшие проблемы. i hate you xD
         this.add(chartPanel, BorderLayout.CENTER);
         //setContentPane(chartPanel);
@@ -180,7 +180,7 @@ public class MainFrame extends JFrame {
         MainContainer.isReading = false;
     }
 
-    private void connectMenuItemActionPerfomed(java.awt.event.ActionEvent evt) {
+    public void connectMenuItemActionPerfomed(java.awt.event.ActionEvent evt) {
         SI30Counter si30Counter = MainContainer.getSi30Counter();
         if (MainContainer.getComPortPreferences() != null) {
             System.out.println("Using not standart com port pref." + MainContainer.getComPortPreferences().getPortName());
@@ -188,19 +188,18 @@ public class MainFrame extends JFrame {
         }
         si30Counter.connect();
         System.out.println("Connected");
-        
+
         Supervisor.startThatProcess();
     }
 
     // обработчики нажатий
     //------------------------------------------------------------------------------------------------------------------
-    
     private void createGUI() {
         createMenu();
-        setSize(800, 500);
+        setSize(900, 700);
         createLeftIndicationPanel();
         createChartField();
-        createRightIndicationPanel();       
+        createRightIndicationPanel();
         //createToolPanel();
         //pack();
     }
@@ -215,7 +214,7 @@ public class MainFrame extends JFrame {
     public void setSpeedCaption(double newSpeed) {
         Double d = new Double(newSpeed);
         System.out.println("Setting current speed:" + d);
-        ((SpeedIndicationPanel)rightIndicationPanel.innerPanelList.get(0)).setSpeedValue(d.toString());
+        ((SpeedIndicationPanel) rightIndicationPanel.innerPanelList.get(0)).setSpeedValue(d.toString());
         //((ToolPanel) toolPanel).setSpeedCaption(d.toString());
         //speed.setText("Speed: "+d.toString());
     }
@@ -237,24 +236,30 @@ public class MainFrame extends JFrame {
         leftIndicationPanel.addElementPanel(tempTextPanel);
         tempTextPanel = new TextPanel("Запусти двигатель");
         leftIndicationPanel.addElementPanel(tempTextPanel);
-        tempTextPanel = new TextPanel("<html> Включи первую передачу. \n Разгонись до скорости 10 км/ч.");
+        tempTextPanel = new TextPanel("<html> Включи первую передачу. Разгонись до скорости 10 км/ч.");
         leftIndicationPanel.addElementPanel(tempTextPanel);
-        tempTextPanel = new TextPanel("<html> Включи вторую передачу. \n Разгонись до скорости 20 км/ч.");
+        tempTextPanel = new TextPanel("<html> Включи вторую передачу. Разгонись до скорости 20 км/ч.");
         leftIndicationPanel.addElementPanel(tempTextPanel);
-        tempTextPanel = new TextPanel("<html> ТРЕБУЕТСЯ УТОЧНЕНИЕ \n Открой дроссельную заслонку.");
+        tempTextPanel = new TextPanel("Открой дроссельную заслонку.");
         leftIndicationPanel.addElementPanel(tempTextPanel);
-        
+
         //TODO две особые панели с отслеживанием достижения скорости до 40 и 100 км
-        tempTextPanel = new TextPanel("40 км/ч. Разгонись до 100 км/ч.");
+        tempTextPanel = new TextPanel("<html> 40 км/ч. Разгонись до 100 км/ч.");
         leftIndicationPanel.addElementPanel(tempTextPanel);
-        tempTextPanel = new TextPanel("100 км/ч. Отпусти ?педаль?");
+        tempTextPanel = new TextPanel("<html> 100 км/ч. Отпусти педаль. Построение графика выбега.");
         leftIndicationPanel.addElementPanel(tempTextPanel);
-        
+
     }
 
     private void fillRightIndicationPanel() {
         SpeedIndicationPanel tempSpeedIndicationPanel = new SpeedIndicationPanel();
         rightIndicationPanel.addElementPanel(tempSpeedIndicationPanel);
+        
+        //TODO исправить и еще один костыль
+        startAndStopButton = new JButton("Start");
+        //startAndStopButton.setPreferredSize(new Dimension(173, 94));
+        toolPanel = new ToolPanel();
+        rightIndicationPanel.add(toolPanel);
     }
 
     public IndicationPanel getLeftIndicationPanel() {
@@ -264,8 +269,4 @@ public class MainFrame extends JFrame {
     public IndicationPanel getRightIndicationPanel() {
         return rightIndicationPanel;
     }
-    
-    
-    
-    
 }

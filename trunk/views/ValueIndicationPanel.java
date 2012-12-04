@@ -4,15 +4,22 @@ package views;
  *
  * @author Kat
  */
-public class SpeedIndicationPanel extends InnerPanel {
+public class ValueIndicationPanel extends InnerPanel {
 
     /**
-     * Creates new form SpeedIndicationPanel
+     * Creates new form ValueIndicationPanel
      */
-    public SpeedIndicationPanel() {
+    public ValueIndicationPanel(String textField, String label) {
         initComponents();
+        mainTextField.setText(textField);
+        mainLabel.setText(label);
+        
     }
 
+    public ValueIndicationPanel() {
+        initComponents();
+    }
+    
     public void setSpeedValue(String speed) {
         mainTextField.setText(speed);
     }

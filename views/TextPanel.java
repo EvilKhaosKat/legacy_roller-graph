@@ -7,19 +7,9 @@ import java.awt.Color;
  *
  * @author Kat
  */
-public class TextPanel extends javax.swing.JPanel implements InnerPanelInterface {
+public class TextPanel extends InnerPanel{
 
-    private Color enabledBackgroundColor = new Color(153,255,153);
-    private Color disabledBackgroundColor = new Color(240, 240, 240);
-    private int status = DISABLED;
     
-    public static int DISABLED = 0;
-    public static int ENABLED = 1;
-    
-    /* TODO панель сама знает какая она по номеру, эту информацию она отдаст супервизору, чтобы тот мог принять решение что же делать
-     * идея и реализация в данном виде больше похожи на костыль, надо найти более эффективный способ
-     */
-    private int number = 0;
     
     /**
      * Creates new form TextPanel
@@ -32,30 +22,7 @@ public class TextPanel extends javax.swing.JPanel implements InnerPanelInterface
     
     private TextPanel() {};
 
-    @Override
-    public void setEnabled() {
-        setBackground(enabledBackgroundColor);
-        status = ENABLED;
-    }
-    
-    @Override
-    public void setDisabled() {
-        //стандартный фоновый цвет (среди констант его почему-то не нашёл)
-        setBackground(disabledBackgroundColor);
-        status = DISABLED;
-    }
-    
-    
-    @Override
-    public void setPanelNumber(int n) {
-        number = n;
-        //System.out.println("Settting nubmer to "+n);
-    }
-
-    @Override
-    public int getPanelNumber() {
-        return number;
-    }
+   
     
     
     
@@ -72,9 +39,9 @@ public class TextPanel extends javax.swing.JPanel implements InnerPanelInterface
 
         setBackground(new java.awt.Color(153, 255, 153));
         setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        setMaximumSize(new java.awt.Dimension(500, 55));
-        setMinimumSize(new java.awt.Dimension(100, 50));
-        setPreferredSize(new java.awt.Dimension(236, 55));
+        setMaximumSize(new java.awt.Dimension(500, 70));
+        setMinimumSize(new java.awt.Dimension(200, 70));
+        setPreferredSize(new java.awt.Dimension(300, 70));
         addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 formMouseClicked(evt);
@@ -82,6 +49,7 @@ public class TextPanel extends javax.swing.JPanel implements InnerPanelInterface
         });
 
         mainLabel.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        mainLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         mainLabel.setText("some text");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -89,16 +57,16 @@ public class TextPanel extends javax.swing.JPanel implements InnerPanelInterface
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(73, Short.MAX_VALUE)
+                .addContainerGap(105, Short.MAX_VALUE)
                 .addComponent(mainLabel)
-                .addContainerGap(81, Short.MAX_VALUE))
+                .addContainerGap(113, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(mainLabel)
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addContainerGap(33, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -113,9 +81,6 @@ public class TextPanel extends javax.swing.JPanel implements InnerPanelInterface
     private javax.swing.JLabel mainLabel;
     // End of variables declaration//GEN-END:variables
 
-    @Override
-    public int getStatus() {
-        return status;
-    }
+
 
 }

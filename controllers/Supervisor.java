@@ -16,15 +16,15 @@ public class Supervisor {
     public static void startThatProcess() {
         setEnabledInnerPanelByNumber(0);
     }
+
     public static void panelClickedByNumber(int number) {
         //TODO помни об особом случае с внутренней панелью со скоростью
         if (innerPanelList.get(number).getStatus() == TextPanel.ENABLED) {
+            setDisabledInnerPanelByNumber(number);
             if ((number + 1) < innerPanelList.size()) {
                 setEnabledInnerPanelByNumber(number + 1);
-                setDisabledInnerPanelByNumber(number);
             }
         }
-
     }
 
     private static void setEnabledInnerPanelByNumber(int number) {

@@ -188,6 +188,7 @@ public class MainFrame extends JFrame {
         }
         si30Counter.connect();
         System.out.println("Connected");
+        
         Supervisor.startThatProcess();
     }
 
@@ -214,7 +215,8 @@ public class MainFrame extends JFrame {
     public void setSpeedCaption(double newSpeed) {
         Double d = new Double(newSpeed);
         System.out.println("Setting current speed:" + d);
-        ((ToolPanel) toolPanel).setSpeedCaption(d.toString());
+        ((SpeedIndicationPanel)rightIndicationPanel.innerPanelList.get(0)).setSpeedValue(d.toString());
+        //((ToolPanel) toolPanel).setSpeedCaption(d.toString());
         //speed.setText("Speed: "+d.toString());
     }
 
@@ -231,18 +233,28 @@ public class MainFrame extends JFrame {
     }
 
     private void fillLeftIndicationPanel() {
-        TextPanel tempTextPanel = new TextPanel("TEXT 1");
+        TextPanel tempTextPanel = new TextPanel("Установи автомобиль на стенд");
         leftIndicationPanel.addElementPanel(tempTextPanel);
-        tempTextPanel = new TextPanel("TEXT 2");
+        tempTextPanel = new TextPanel("Запусти двигатель");
         leftIndicationPanel.addElementPanel(tempTextPanel);
-        tempTextPanel = new TextPanel("TEXT 3");
+        tempTextPanel = new TextPanel("<html> Включи первую передачу. \n Разгонись до скорости 10 км/ч.");
+        leftIndicationPanel.addElementPanel(tempTextPanel);
+        tempTextPanel = new TextPanel("<html> Включи вторую передачу. \n Разгонись до скорости 20 км/ч.");
+        leftIndicationPanel.addElementPanel(tempTextPanel);
+        tempTextPanel = new TextPanel("<html> ТРЕБУЕТСЯ УТОЧНЕНИЕ \n Открой дроссельную заслонку.");
+        leftIndicationPanel.addElementPanel(tempTextPanel);
+        
+        //TODO две особые панели с отслеживанием достижения скорости до 40 и 100 км
+        tempTextPanel = new TextPanel("40 км/ч. Разгонись до 100 км/ч.");
+        leftIndicationPanel.addElementPanel(tempTextPanel);
+        tempTextPanel = new TextPanel("100 км/ч. Отпусти ?педаль?");
         leftIndicationPanel.addElementPanel(tempTextPanel);
         
     }
 
     private void fillRightIndicationPanel() {
-        TextPanel tempTextPanel = new TextPanel("TEXT 1");
-        rightIndicationPanel.addElementPanel(tempTextPanel);
+        SpeedIndicationPanel tempSpeedIndicationPanel = new SpeedIndicationPanel();
+        rightIndicationPanel.addElementPanel(tempSpeedIndicationPanel);
     }
 
     public IndicationPanel getLeftIndicationPanel() {

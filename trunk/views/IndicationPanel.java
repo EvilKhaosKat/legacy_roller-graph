@@ -28,9 +28,11 @@ public class IndicationPanel extends javax.swing.JPanel {
 
     public void addElementPanel(InnerPanelInterface innerPanel) {
         //this.removeAll();
-        //TODO с преобразанием типов, интерфейсами и прочим Я знатно нашаманил
-        add((JPanel)innerPanel);
+        //System.out.println("SetPanelNumber "+innerPanelList.size());
+        innerPanel.setPanelNumber(innerPanelList.size());
         innerPanelList.add(innerPanel);
+        //TODO с преобразанием типов, интерфейсами и Т.д. Я знатно нашаманил
+        add((JPanel)innerPanel);
         revalidate();
         //repaint();
         //TODO возможно нужно шаманство с ревалидацией/перерисовкой. не помню логику работы этого места. возможно требует доработки

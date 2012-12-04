@@ -1,5 +1,6 @@
 package views;
 
+import controllers.Supervisor;
 import java.awt.Color;
 
 /**
@@ -10,6 +11,16 @@ public class TextPanel extends javax.swing.JPanel implements InnerPanelInterface
 
     private Color enabledBackgroundColor = new Color(153,255,153);
     private Color disabledBackgroundColor = new Color(240, 240, 240);
+    private int status = DISABLED;
+    
+    public static int DISABLED = 0;
+    public static int ENABLED = 1;
+    
+    /* TODO панель сама знает какая она по номеру, эту информацию она отдаст супервизору, чтобы тот мог принять решение что же делать
+     * идея и реализация в данном виде больше похожи на костыль, надо найти более эффективный способ
+     */
+    private int number = 0;
+    
     /**
      * Creates new form TextPanel
      */
@@ -21,14 +32,32 @@ public class TextPanel extends javax.swing.JPanel implements InnerPanelInterface
     
     private TextPanel() {};
 
+    @Override
     public void setEnabled() {
         setBackground(enabledBackgroundColor);
+        status = ENABLED;
     }
     
+    @Override
     public void setDisabled() {
         //стандартный фоновый цвет (среди констант его почему-то не нашёл)
         setBackground(disabledBackgroundColor);
+        status = DISABLED;
     }
+    
+    
+    @Override
+    public void setPanelNumber(int n) {
+        number = n;
+        //System.out.println("Settting nubmer to "+n);
+    }
+
+    @Override
+    public int getPanelNumber() {
+        return number;
+    }
+    
+    
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -74,10 +103,19 @@ public class TextPanel extends javax.swing.JPanel implements InnerPanelInterface
     }// </editor-fold>//GEN-END:initComponents
 
     private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
-        System.out.println("Inner panel with text "+mainLabel.getText()+" clicked.");
+        //TODO обработка нажатия на панель. передать информацию супервизору
+        System.out.println("Inner panel with text '"+mainLabel.getText()+"' and number "+number+ " clicked.");
+        //setEnabled();
+        Supervisor.panelClickedByNumber(number);
     }//GEN-LAST:event_formMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel mainLabel;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public int getStatus() {
+        return status;
+    }
+
 }

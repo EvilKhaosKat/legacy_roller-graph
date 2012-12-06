@@ -16,7 +16,7 @@ public class Drawer {
     private XYSeriesCollection dataset;
     
     private int count = 0; //количество отрисованных значений
-    private int frequency = 500;
+    private int frequency = 500; //в миллисекундах, и это не frequency
     
     TimerTask task;
     
@@ -25,6 +25,9 @@ public class Drawer {
         this.dataset=dataset;
         measurement=reader.getMeasurement();
     }
+    
+    
+    
     private Drawer() {}
     
     public void startDrawing() {

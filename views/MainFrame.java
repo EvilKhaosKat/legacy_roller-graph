@@ -33,7 +33,9 @@ import device.si30.SI30Counter;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.io.FileNotFoundException;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.util.logging.Level;
@@ -57,6 +59,7 @@ public class MainFrame extends JFrame {
     private JMenuItem testMenuItem1;
     private JMenuItem testMenuItem2;
     private JMenuItem saveEtalonMenuItem;
+    private JMenuItem loadEtalonMenuItem;
     private JMenuItem menuOptionsItem1;
     private JMenuItem connectMenuItem;
     private JFreeChart rollerDiagrammer;
@@ -144,7 +147,15 @@ public class MainFrame extends JFrame {
             }
         });
         testMenu.add(saveEtalonMenuItem);
-        
+
+        loadEtalonMenuItem = new JMenuItem("Загрузить эталонное измерение");
+        loadEtalonMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItemLoadEtalonActionPerformed(evt);
+            }
+        });
+        testMenu.add(loadEtalonMenuItem);
+
         mainMenuBar.add(testMenu);
 
 
@@ -209,7 +220,7 @@ public class MainFrame extends JFrame {
             oos.flush();
             oos.close();
         } catch (Exception ex) {
-            System.out.println("Error during saving etalon."+ex.getMessage());
+            System.out.println("Error during saving etalon." + ex.getMessage());
         } finally {
             try {
                 fos.close();
@@ -217,6 +228,33 @@ public class MainFrame extends JFrame {
                 System.out.println("Error during trying to close fos after exception.");
             }
         }
+
+
+    }
+
+    public void menuItemLoadEtalonActionPerformed(ActionEvent evt) {
+
+        Measurement measurement = null;
+
+        
+        try {
+            FileInputStream fis = new FileInputStream(MainContainer.getDefaultEtalonMeasurementFilename());
+            ObjectInputStream oin = new ObjectInputStream(fis);
+            measurement = (Measurement) oin.readObject();
+        } catch (Exception ex) {
+            System.out.println("Error during loading etalon."+ex.getMessage());
+        }
+
+        //TestSerial ts = (TestSerial) oin.readObject();
+
+        MainContainer.getListMeasurements().add(measurement);
+
+        Drawer d = new Drawer(measurement, dataset);
+        d.startDrawing();
+
+
+
+
 
 
     }

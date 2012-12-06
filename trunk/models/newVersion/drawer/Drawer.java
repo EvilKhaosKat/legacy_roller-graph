@@ -26,6 +26,11 @@ public class Drawer {
         measurement=reader.getMeasurement();
     }
     
+    public Drawer(Measurement m, XYSeriesCollection dataset) {
+        //reader=r;
+        this.dataset=dataset;
+        measurement=m;
+    }
     
     
     private Drawer() {}

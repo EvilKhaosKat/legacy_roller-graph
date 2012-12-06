@@ -28,6 +28,8 @@ public class MainContainer {
 
     private static MainFrame mainFrame;
     
+    private static String defaultEtalonMeasurementFilename = "etalon_measurement";
+    
     //TODO тупая идея, спору нет, но это лучшее что я сейчас придумать смог
     public static boolean isReading=false;
     //TODO конкретные значения коэффициентов надо переопределить
@@ -72,6 +74,15 @@ public class MainContainer {
     public static void setComPortPreferences(ComPortPreferences newComPortPreferences) {
         comPortPreferences = newComPortPreferences;
     }
+
+    public static String getDefaultEtalonMeasurementFilename() {
+        return defaultEtalonMeasurementFilename;
+    }
+
+    public static void setDefaultEtalonMeasurementFilename(String defaultEtalonMeasurementFilename) {
+        MainContainer.defaultEtalonMeasurementFilename = defaultEtalonMeasurementFilename;
+    }
+    
     
     
 }

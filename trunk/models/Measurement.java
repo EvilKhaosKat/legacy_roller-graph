@@ -1,5 +1,6 @@
 package models;
 
+import java.io.Serializable;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -8,7 +9,7 @@ import java.util.List;
  *
  * @author Kat
  */
-public class Measurement {
+public class Measurement implements Serializable{
     //TODO проще, гораздо лучше будет сделать хранение двух чисел. непосредственно значения и привязки ко времени. это упростит код отрисовщика(он имеет уже обе координаты). а также логику работы (доизмерение , достроение графика, в другом месте, не с нуля времени. и т.п. извращения)
 
     private List<Integer> listRawData = Collections.synchronizedList(new LinkedList());
@@ -34,7 +35,7 @@ public class Measurement {
         }
         System.out.println("speed:" + speed);
         listSpeedsData.add(speed);
-        if (speed >= MainContainer.minSpeed) {
+        if ( (speed >= MainContainer.minSpeed) && (speed <= MainContainer.maxSpeed)) {
             listNeedfulSpeedsData.add(speed);
             System.out.println("add to needful list");
         } else {

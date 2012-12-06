@@ -31,6 +31,13 @@ import org.jfree.data.xy.XYSeriesCollection;
 
 import device.si30.SI30Counter;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JButton;
 import models.Measurement;
 import models.newVersion.drawer.Drawer;
@@ -49,6 +56,7 @@ public class MainFrame extends JFrame {
     private JMenuBar mainMenuBar;
     private JMenuItem testMenuItem1;
     private JMenuItem testMenuItem2;
+    private JMenuItem saveEtalonMenuItem;
     private JMenuItem menuOptionsItem1;
     private JMenuItem connectMenuItem;
     private JFreeChart rollerDiagrammer;
@@ -120,6 +128,7 @@ public class MainFrame extends JFrame {
             }
         });
         testMenu.add(testMenuItem1);
+
         testMenuItem2 = new JMenuItem("Стоп");
         testMenuItem2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -127,6 +136,15 @@ public class MainFrame extends JFrame {
             }
         });
         testMenu.add(testMenuItem2);
+
+        saveEtalonMenuItem = new JMenuItem("Сохранить последнее измерение как эталон");
+        saveEtalonMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItemSaveEtalonActionPerformed(evt);
+            }
+        });
+        testMenu.add(saveEtalonMenuItem);
+        
         mainMenuBar.add(testMenu);
 
 
@@ -178,6 +196,29 @@ public class MainFrame extends JFrame {
         //TODO обработчик нажатия
         //DrawingOrganizer.startDrawing();
         MainContainer.isReading = false;
+    }
+
+    public void menuItemSaveEtalonActionPerformed(ActionEvent evt) {
+        FileOutputStream fos = null;
+        try {
+            Measurement measurement = MainContainer.getListMeasurements().get(
+                    MainContainer.getListMeasurements().size() - 1);
+            fos = new FileOutputStream(MainContainer.getDefaultEtalonMeasurementFilename());
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            oos.writeObject(measurement);
+            oos.flush();
+            oos.close();
+        } catch (Exception ex) {
+            System.out.println("Error during saving etalon."+ex.getMessage());
+        } finally {
+            try {
+                fos.close();
+            } catch (IOException ex) {
+                System.out.println("Error during trying to close fos after exception.");
+            }
+        }
+
+
     }
 
     public void connectMenuItemActionPerfomed(java.awt.event.ActionEvent evt) {
@@ -254,17 +295,17 @@ public class MainFrame extends JFrame {
     private void fillRightIndicationPanel() {
         ValueIndicationPanel tempSpeedIndicationPanel = new ValueIndicationPanel();
         rightIndicationPanel.addElementPanel(tempSpeedIndicationPanel);
-        
-        tempSpeedIndicationPanel = new ValueIndicationPanel("40.0","Vmin");
+
+        tempSpeedIndicationPanel = new ValueIndicationPanel("40.0", "Vmin");
         rightIndicationPanel.addElementPanel(tempSpeedIndicationPanel);
-        tempSpeedIndicationPanel = new ValueIndicationPanel("100.0","Vmax");
+        tempSpeedIndicationPanel = new ValueIndicationPanel("100.0", "Vmax");
         rightIndicationPanel.addElementPanel(tempSpeedIndicationPanel);
-        
+
         /*tempSpeedIndicationPanel = new ValueIndicationPanel("40.0","t разгона");
-        rightIndicationPanel.addElementPanel(tempSpeedIndicationPanel);
-        tempSpeedIndicationPanel = new ValueIndicationPanel("100.0","t выбега");
-        rightIndicationPanel.addElementPanel(tempSpeedIndicationPanel);*/
-        
+         rightIndicationPanel.addElementPanel(tempSpeedIndicationPanel);
+         tempSpeedIndicationPanel = new ValueIndicationPanel("100.0","t выбега");
+         rightIndicationPanel.addElementPanel(tempSpeedIndicationPanel);*/
+
         //TODO исправить и еще один костыль
         startAndStopButton = new JButton("Start");
         //startAndStopButton.setPreferredSize(new Dimension(173, 94));

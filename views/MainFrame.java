@@ -312,7 +312,7 @@ public class MainFrame extends JFrame {
     }
 
     private void fillLeftIndicationPanel() {
-        TextPanel tempTextPanel = new TextPanel("Установи автомобиль на стенд");
+        TextPanel tempTextPanel = new TextPanel("<html> Установи автомобиль на стенд");
         leftIndicationPanel.addElementPanel(tempTextPanel);
         tempTextPanel = new TextPanel("Запусти двигатель");
         leftIndicationPanel.addElementPanel(tempTextPanel);

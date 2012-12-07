@@ -68,8 +68,8 @@ public class Measurement implements Serializable{
     }
     
     public double getCurrentSpeed() {
-    	specialPseudoSpeed+=30;
+    	//specialPseudoSpeed+=30;
     	if (listSpeedsData.size() == 0) return 0;
-    	return listSpeedsData.get(listSpeedsData.size()-1)+specialPseudoSpeed;
+    	return listSpeedsData.get(listSpeedsData.size()-1)/*+specialPseudoSpeed*/;
     }
 }

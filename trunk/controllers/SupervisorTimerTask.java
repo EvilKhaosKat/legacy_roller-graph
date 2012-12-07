@@ -13,6 +13,7 @@ public class SupervisorTimerTask extends TimerTask{
 				
 	
 		if (currentSpeed>=MainContainer.maxSpeed) {
+			System.out.println("MORE THAN MAX!!!!!!!!!!!!!!!!!!!!");
 			Supervisor.normalPanelActivation(5);//панель достиг 100 км 
 			//TODO начался выбег. нужна дополнительная обработка ситуации
 		}  

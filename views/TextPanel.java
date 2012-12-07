@@ -48,7 +48,7 @@ public class TextPanel extends InnerPanel{
             }
         });
 
-        mainLabel.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        mainLabel.setFont(new java.awt.Font("Tahoma", 0, 25)); // NOI18N
         mainLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         mainLabel.setText("some text");
 

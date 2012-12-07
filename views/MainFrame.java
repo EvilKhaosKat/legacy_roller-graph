@@ -292,6 +292,7 @@ public class MainFrame extends JFrame {
 
     public void setSpeedCaption(double newSpeed) {
         Double d = new Double(newSpeed);
+        d=d/14.625; //40km=585. 585/40 = 14.625 
         System.out.println("Setting current speed:" + d);
         ((ValueIndicationPanel) rightIndicationPanel.innerPanelList.get(0)).setSpeedValue(d.toString());
         //((ToolPanel) toolPanel).setSpeedCaption(d.toString());

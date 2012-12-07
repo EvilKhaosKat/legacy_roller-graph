@@ -11,11 +11,11 @@ import java.util.List;
  */
 public class Measurement implements Serializable{
     //TODO проще, гораздо лучше будет сделать хранение двух чисел. непосредственно значения и привязки ко времени. это упростит код отрисовщика(он имеет уже обе координаты). а также логику работы (доизмерение , достроение графика, в другом месте, не с нуля времени. и т.п. извращения)
-
-    private List<Integer> listRawData = Collections.synchronizedList(new LinkedList());
-    private List<Double> listSpeedsData = Collections.synchronizedList(new LinkedList());
-    private List<Double> listNeedfulSpeedsData = Collections.synchronizedList(new LinkedList());
-    private double conversionRawToSpeedCoefficient = 0.0641025641025641; // 1/128=0.0078125;*60*2 = 0.975. и умножим на 40 деленные на 585 0,0683760683760684 =
+ //TODO замена на протектед может поможет
+	protected List<Integer> listRawData = Collections.synchronizedList(new LinkedList());
+	protected List<Double> listSpeedsData = Collections.synchronizedList(new LinkedList());
+	protected List<Double> listNeedfulSpeedsData = Collections.synchronizedList(new LinkedList());
+	protected double conversionRawToSpeedCoefficient = 0.0641025641025641; // 1/128=0.0078125;*60*2 = 0.975. и умножим на 40 деленные на 585 0,0683760683760684 =
     
     private double specialPseudoSpeed = 0;
 

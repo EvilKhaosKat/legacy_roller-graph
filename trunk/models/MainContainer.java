@@ -38,6 +38,7 @@ public class MainContainer {
     
     public static double speedFirstThreshold = 146.25; //10 km
     public static double speedSecondThreshold = 292.5; //20 km
+    public static double speedThirdThreshold = 438.75; //20 km
     
     private static ComPortPreferences comPortPreferences;
     

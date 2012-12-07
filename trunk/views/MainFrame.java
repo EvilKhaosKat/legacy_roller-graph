@@ -249,7 +249,7 @@ public class MainFrame extends JFrame {
 
         MainContainer.getListMeasurements().add(measurement);
 
-        Drawer d = new Drawer(measurement, dataset);
+        Drawer d = new Drawer(measurement, dataset, true);
         d.startDrawing();
 
 

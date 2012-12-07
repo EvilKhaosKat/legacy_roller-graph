@@ -27,6 +27,7 @@ public class DrawerTimerTask extends TimerTask {
     public void run() {
         Double temp;
         MainContainer.getMainFrame().setSpeedCaption(drawer.getMeasurement().getCurrentSpeed());
+        System.out.println();
         if (drawer.getCount()<drawer.getMeasurement().getListNeedfulSpeedsData().size()) {
             for (int i=drawer.getCount();i<drawer.getMeasurement().getListNeedfulSpeedsData().size();i++) {
                 temp = (double)i*drawer.getFrequency()/1000;

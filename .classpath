@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="trunk"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="C:/Users/LAP/Desktop/jfreechart-1.0.14/lib/jcommon-1.0.17.jar"/>
+	<classpathentry kind="lib" path="C:/Users/LAP/Desktop/jfreechart-1.0.14/lib/jfreechart-1.0.14.jar"/>
+	<classpathentry kind="lib" path="D:/NetBeansProjects/roller-graph/roller-graph-project/dist/lib/ext-dev-project.jar"/>
+	<classpathentry kind="lib" path="D:/NetBeansProjects/roller-graph/roller-graph-project/dist/lib/RXTXcomm.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

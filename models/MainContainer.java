@@ -33,8 +33,11 @@ public class MainContainer {
     //TODO тупая идея, спору нет, но это лучшее что я сейчас придумать смог
     public static boolean isReading=false;
     //TODO конкретные значения коэффициентов надо переопределить
-    public static double minSpeed=2.75;
-    public static double maxSpeed = 5;
+    public static double minSpeed=400;
+    public static double maxSpeed = 1000;
+    
+    public static double speedFirstThreshold = 100;
+    public static double speedSecondThreshold = 200;
     
     private static ComPortPreferences comPortPreferences;
     

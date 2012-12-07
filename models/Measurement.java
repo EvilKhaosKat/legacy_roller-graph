@@ -16,6 +16,8 @@ public class Measurement implements Serializable{
     private List<Double> listSpeedsData = Collections.synchronizedList(new LinkedList());
     private List<Double> listNeedfulSpeedsData = Collections.synchronizedList(new LinkedList());
     private double conversionRawToSpeedCoefficient = 0.9375; // 1/128=0.0078125;*60*2
+    
+    private double specialPseudoSpeed = 0;
 
     public void addMeasure(int m) {
         listRawData.add(m);
@@ -63,5 +65,11 @@ public class Measurement implements Serializable{
 
     public List<Double> getListNeedfulSpeedsData() {
         return listNeedfulSpeedsData;
+    }
+    
+    public double getCurrentSpeed() {
+    	specialPseudoSpeed+=30;
+    	if (listSpeedsData.size() == 0) return 0;
+    	return listSpeedsData.get(listSpeedsData.size()-1)+specialPseudoSpeed;
     }
 }

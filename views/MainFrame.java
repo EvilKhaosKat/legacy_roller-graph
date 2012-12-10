@@ -38,6 +38,8 @@ import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JButton;
@@ -291,10 +293,14 @@ public class MainFrame extends JFrame {
     }
 
     public void setSpeedCaption(double newSpeed) {
+        //TODO каждый раз создавать обьект идея не самая хорошая, может быть можно сделать лучше
         Double d = new Double(newSpeed);
+        Double bd = new BigDecimal(d).setScale(2,RoundingMode.HALF_UP).doubleValue();
         //d=d/14.625; //40km=585. 585/40 = 14.625 
         System.out.println("Setting current speed:" + d);
-        ((ValueIndicationPanel) rightIndicationPanel.innerPanelList.get(0)).setSpeedValue(String.format("%.2f", d));
+        ((ValueIndicationPanel) rightIndicationPanel.innerPanelList.get(0)).setSpeedValue(bd.toString());
+        //new BigDecimal(3.675f).setScale(2, RoundingMode.HALF_UP).floatValue()
+        //String.format("%.2f", d)
         //((ToolPanel) toolPanel).setSpeedCaption(d.toString());
         //speed.setText("Speed: "+d.toString());
     }

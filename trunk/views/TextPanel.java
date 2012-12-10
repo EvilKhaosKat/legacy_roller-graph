@@ -39,8 +39,8 @@ public class TextPanel extends InnerPanel{
 
         setBackground(new java.awt.Color(153, 255, 153));
         setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        setMaximumSize(new java.awt.Dimension(500, 100));
-        setMinimumSize(new java.awt.Dimension(200, 50));
+        setMaximumSize(new java.awt.Dimension(500, 70));
+        setMinimumSize(new java.awt.Dimension(200, 70));
         setPreferredSize(new java.awt.Dimension(300, 70));
         addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -48,7 +48,7 @@ public class TextPanel extends InnerPanel{
             }
         });
 
-        mainLabel.setFont(new java.awt.Font("Tahoma", 0, 22)); // NOI18N
+        mainLabel.setFont(new java.awt.Font("Tahoma", 1, 22)); // NOI18N
         mainLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         mainLabel.setText("some text");
 
@@ -57,16 +57,16 @@ public class TextPanel extends InnerPanel{
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(98, Short.MAX_VALUE)
+                .addContainerGap(83, Short.MAX_VALUE)
                 .addComponent(mainLabel)
-                .addContainerGap(120, Short.MAX_VALUE))
+                .addContainerGap(104, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(19, Short.MAX_VALUE)
+                .addContainerGap(17, Short.MAX_VALUE)
                 .addComponent(mainLabel)
-                .addContainerGap(25, Short.MAX_VALUE))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 

@@ -15,8 +15,8 @@ public class Measurement implements Serializable{
 	protected List<Integer> listRawData = Collections.synchronizedList(new LinkedList());
 	protected List<Double> listSpeedsData = Collections.synchronizedList(new LinkedList());
 	protected List<Double> listNeedfulSpeedsData = Collections.synchronizedList(new LinkedList());
-	protected double conversionRawToSpeedCoefficient = 0.0641025641025641; // 1/128=0.0078125;*60*2 = 0.975. и умножим на 40 деленные на 585 0,0683760683760684 =
-    
+	protected double conversionRawToSpeedCoefficient = 0.0801282051282053; // 1/128=0.0078125;*60*2 = 0.975.УЖЕ НЕ НА 2 УМНОЖАЕМ и умножим на 40 деленные на 585 0,0683760683760684 =. а теперь сменим 2 на 5, ибо частота опроса с 2 измерений в секунду (500мс) изменилась на 5 измерений в секунду (200мс)
+    //0,0320512820512821 без учета частоты
     private double specialPseudoSpeed = 0;
 
     public void addMeasure(int m) {

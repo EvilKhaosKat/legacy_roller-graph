@@ -16,7 +16,7 @@ public class Drawer {
     private XYSeriesCollection dataset;
     
     private int count = 0; //количество отрисованных значений
-    private int frequency = 500; //в миллисекундах, и это не frequency
+    private int frequency = 400; //в миллисекундах, и это не frequency
     private boolean stopAfterDrawAllPoints = false;
     
     TimerTask task;

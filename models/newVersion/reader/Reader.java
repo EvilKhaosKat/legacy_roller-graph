@@ -13,7 +13,7 @@ import models.Measurement;
 public class Reader {
 
     private float time = 10; // сколько секунд длится считывание
-    private int frequency = 500; //in milliseconds
+    private int frequency = 400; //in milliseconds
     private int count = 0; //количество прочитанных значений
     private Timer timer;
     private TimerTask task;//  = new ReadingTimerTask();

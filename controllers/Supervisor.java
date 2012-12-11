@@ -16,7 +16,7 @@ public class Supervisor {
 
     private static List<InnerPanelInterface> innerPanelList = MainContainer.getMainFrame().getLeftIndicationPanel().getInnerPanelList();
 
-    static boolean[] buttonsPermissions = {true, true, false,false,true,false,false};//{true,true,true,true,true,true,true};
+    static boolean[] buttonsPermissions = {true, true, false,false,false,true,false,false};//{true,true,true,true,true,true,true};
     
     static int frequency = 500;
     

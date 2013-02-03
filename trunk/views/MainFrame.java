@@ -273,9 +273,9 @@ public class MainFrame extends JFrame {
                 Measurement postprocessedMeasurement = null;
                 //TODO создать обработанный экземпляр "измерения"
                 PostProcessorThreeAverage postProcessor = new PostProcessorThreeAverage();
-                postprocessedMeasurement = postProcessor.doPostProcess(postprocessedMeasurement);
+                postprocessedMeasurement = postProcessor.doPostProcess(MainContainer.getListMeasurements().get(MainContainer.getListMeasurements().size()-1));
                 //переприсвоим последнее измерение на 
-                MainContainer.getListMeasurements().set(MainContainer.getListMeasurements().size(), postprocessedMeasurement);
+                MainContainer.getListMeasurements().set(MainContainer.getListMeasurements().size()-1, postprocessedMeasurement);
                 d = new Drawer(postprocessedMeasurement, dataset, true);
                 d.startDrawing();
                 break;

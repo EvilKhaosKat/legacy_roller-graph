@@ -47,5 +47,8 @@ public class MeasurementPoint {
         this.numberInMeasurement = numberInMeasurement;
     }
     
+    public String toString() {
+        return "["+"value:"+value+" time:"+timeInMillis+" no:"+numberInMeasurement+"]";
+    }
     
 }

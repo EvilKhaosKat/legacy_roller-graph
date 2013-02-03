@@ -4,6 +4,7 @@
  */
 package models.postprocessing;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import models.MainContainer;
@@ -18,7 +19,11 @@ import models.newVersion.reader.Reader;
 public class PostProcessorThreeAverage {
 
     public Measurement doPostProcess(Measurement postprocessedMeasurement) {
-        List<Double> listOfSpeeds = postprocessedMeasurement.getListSpeedsData();
+        List<Double> listOfSpeeds = postprocessedMeasurement.getListNeedfulSpeedsData();
+
+        System.out.println("--------------------------------------------------");
+        System.out.println("ListOfSpeed:" + listOfSpeeds.size());
+        System.out.println("--------------------------------------------------");
 
         List<MeasurementPoint> listOfNearToBeMaxValues = new LinkedList<MeasurementPoint>();
         List<MeasurementPoint> listOfNearToBeMinValues = new LinkedList<MeasurementPoint>();
@@ -34,6 +39,14 @@ public class PostProcessorThreeAverage {
                 listOfNearToBeMinValues.add(new MeasurementPoint(value, i * 400L, i));
             }
         }
+
+        System.out.println("--------------------------------------------------");
+        System.out.println("listOfNearToBeMaxValues:" + listOfNearToBeMaxValues.size());
+        System.out.println("listOfNearToBeMinValues:" + listOfNearToBeMinValues.size());
+        System.out.println("--------------------------------------------------");
+
+
+
         //костылеобразо, придумать более оптимальный алгоритм
         List<MeasurementPoint> listOfFirstPeakMaxValues = new LinkedList<MeasurementPoint>();
         List<MeasurementPoint> listOfSecondPeakMaxValues = new LinkedList<MeasurementPoint>();
@@ -44,7 +57,7 @@ public class PostProcessorThreeAverage {
 
         int x, y = 0;
         for (x = 0; x < listOfNearToBeMaxValues.size() - 1; x++) {
-            if ((listOfNearToBeMaxValues.get(x).getNumberInMeasurement() - listOfNearToBeMaxValues.get(x + 1).getNumberInMeasurement()) < 3 /*4 секунды разницы. чтоб отловить разные пики 10000/400*/) {
+            if ((listOfNearToBeMaxValues.get(x+1).getNumberInMeasurement() - listOfNearToBeMaxValues.get(x).getNumberInMeasurement()) < 3 /*4 секунды разницы. чтоб отловить разные пики 10000/400*/) {
                 listOfFirstPeakMaxValues.add(listOfNearToBeMaxValues.get(x));
             } else {
                 y = x + 1;
@@ -52,7 +65,7 @@ public class PostProcessorThreeAverage {
             }
         }
         for (x = y; x < listOfNearToBeMaxValues.size() - 1; x++) {
-            if ((listOfNearToBeMaxValues.get(x).getNumberInMeasurement() - listOfNearToBeMaxValues.get(x + 1).getNumberInMeasurement()) < 3 /*4 секунды разницы. чтоб отловить разные пики 10000/400*/) {
+            if ((listOfNearToBeMaxValues.get(x+1).getNumberInMeasurement() - listOfNearToBeMaxValues.get(x).getNumberInMeasurement()) < 3 /*4 секунды разницы. чтоб отловить разные пики 10000/400*/) {
                 listOfSecondPeakMaxValues.add(listOfNearToBeMaxValues.get(x));
             } else {
                 y = x + 1;
@@ -62,9 +75,24 @@ public class PostProcessorThreeAverage {
         listOfThirdPeakMaxValues = listOfNearToBeMaxValues.subList(y, listOfNearToBeMaxValues.size() - 1);
         //три "пика" получены
 
+        System.out.println("--------------------------------------------------");
+        System.out.println("listOfFirstPeakMaxValues:" + Arrays.deepToString(listOfFirstPeakMaxValues.toArray()));
+
+        System.out.println("listOfSecondPeakMaxValues:" + Arrays.deepToString(listOfSecondPeakMaxValues.toArray()));
+
+        System.out.println("listOfThirdPeakMaxValues:" + Arrays.deepToString(listOfThirdPeakMaxValues.toArray()));
+        System.out.println("--------------------------------------------------");
+
+
         pmax1 = getMaxFromMeasurementsList(listOfFirstPeakMaxValues);
         pmax2 = getMaxFromMeasurementsList(listOfSecondPeakMaxValues);
         pmax3 = getMaxFromMeasurementsList(listOfThirdPeakMaxValues);
+
+        System.out.println("--------------------------------------------------");
+        System.out.println("pmax1:" + pmax1.getValue() +" "+ pmax1.getNumberInMeasurement()+" "+ pmax1.getTimeInMillis());
+        System.out.println("pmax2:" + pmax2.getValue() +" "+ pmax2.getNumberInMeasurement()+" "+ pmax2.getTimeInMillis());
+        System.out.println("pmax3:" + pmax3.getValue() +" "+ pmax3.getNumberInMeasurement()+" "+ pmax3.getTimeInMillis());
+        System.out.println("--------------------------------------------------");
 
         //костылеобразо, придумать более оптимальный алгоритм
         List<MeasurementPoint> listOfFirstPeakMinValues = new LinkedList<MeasurementPoint>();
@@ -76,7 +104,7 @@ public class PostProcessorThreeAverage {
 
         x = y = 0;
         for (x = 0; x < listOfNearToBeMinValues.size() - 1; x++) {
-            if ((listOfNearToBeMinValues.get(x).getNumberInMeasurement() - listOfNearToBeMinValues.get(x + 1).getNumberInMeasurement()) < 3 /*4 секунды разницы. чтоб отловить разные пики 10000/400*/) {
+            if ((listOfNearToBeMinValues.get(x+1).getNumberInMeasurement() - listOfNearToBeMinValues.get(x).getNumberInMeasurement()) < 3 /*4 секунды разницы. чтоб отловить разные пики 10000/400*/) {
                 listOfFirstPeakMinValues.add(listOfNearToBeMinValues.get(x));
             } else {
                 y = x + 1;
@@ -84,7 +112,7 @@ public class PostProcessorThreeAverage {
             }
         }
         for (x = y; x < listOfNearToBeMinValues.size() - 1; x++) {
-            if ((listOfNearToBeMinValues.get(x).getNumberInMeasurement() - listOfNearToBeMinValues.get(x + 1).getNumberInMeasurement()) < 3 /*4 секунды разницы. чтоб отловить разные пики 10000/400*/) {
+            if ((listOfNearToBeMinValues.get(x+1).getNumberInMeasurement() - listOfNearToBeMinValues.get(x).getNumberInMeasurement()) < 3 /*4 секунды разницы. чтоб отловить разные пики 10000/400*/) {
                 listOfSecondPeakMinValues.add(listOfNearToBeMinValues.get(x));
             } else {
                 y = x + 1;
@@ -98,32 +126,49 @@ public class PostProcessorThreeAverage {
         pMin2 = getMinFromMeasurementsList(listOfSecondPeakMinValues);
         pMin3 = getMinFromMeasurementsList(listOfThirdPeakMinValues);
 
+        System.out.println("--------------------------------------------------");
+        System.out.println("pmin1:" + pMin1.getValue() +" "+ pMin1.getNumberInMeasurement()+" "+ pMin1.getTimeInMillis());
+        System.out.println("pmin2:" + pMin2.getValue() +" "+ pMin2.getNumberInMeasurement()+" "+ pMin2.getTimeInMillis());
+        System.out.println("pmin3:" + pMin3.getValue() +" "+ pMin3.getNumberInMeasurement()+" "+ pMin3.getTimeInMillis());
+        System.out.println("--------------------------------------------------");
+
         //все крайние точки известны. можно вычислять времена, можно выделить три отдедельных графика
         //----------------------------------------------------------------------
-        
+
         List<Double> listOfFirstGraphic = new LinkedList<Double>();
         List<Double> listOfSecondGraphic = new LinkedList<Double>();
         List<Double> listOfThirdGraphic = new LinkedList<Double>();
-        
+
         listOfFirstGraphic = listOfSpeeds.subList(0, pMin1.getNumberInMeasurement());
         listOfSecondGraphic = listOfSpeeds.subList(pMin1.getNumberInMeasurement(), pMin2.getNumberInMeasurement());
         listOfThirdGraphic = listOfSpeeds.subList(pMin2.getNumberInMeasurement(), pMin3.getNumberInMeasurement());
+
+        
+        System.out.println("--------------------------------------------------");
+        System.out.println("listOfFirstGraphic:" + listOfFirstGraphic.size());
+        System.out.println("listOfSecondGraphic:" + listOfSecondGraphic.size());
+        System.out.println("listOfThirdGraphic:" + listOfThirdGraphic.size());
+        System.out.println("--------------------------------------------------");
+        
         
         List<Double> listOfAverage = new LinkedList<Double>();
-        for (int i=0;i<listOfSpeeds.size();i++) {
-            listOfAverage.add(listOfFirstGraphic.get(i) + listOfSecondGraphic.get(i) + listOfThirdGraphic.get(i)/3);
+        //TODO исправить логическую ошибку
+        for (int i = 0; i < 30; i++) {
+            listOfAverage.add((listOfFirstGraphic.get(i) + listOfSecondGraphic.get(i) + listOfThirdGraphic.get(i)) / 3);
         }
-        postprocessedMeasurement.setListSpeedsData(listOfAverage);
+        postprocessedMeasurement.setListNeedfulSpeedsData(listOfAverage);
+        //Measurement tempM = new Measurement();
+        //tempM.setListSpeedsData(listOfAverage);
         
         System.out.println("--------------------------------------------------");
-        System.out.println("время разгона из 1 графика "+pmax1.getTimeInMillis());
-        System.out.println("время выбега из 1 графика "+(pMin1.getTimeInMillis()-pmax1.getTimeInMillis()));
+        System.out.println("время разгона из 1 графика " + pmax1.getTimeInMillis());
+        System.out.println("время выбега из 1 графика " + (pMin1.getTimeInMillis() - pmax1.getTimeInMillis()));
         System.out.println("--------------------------------------------------");
+        
         return postprocessedMeasurement;
+        //return tempM;
     }
 
-    
-    
     private MeasurementPoint getMaxFromMeasurementsList(List<MeasurementPoint> list) {
         MeasurementPoint maxPoint = list.get(0);
         for (MeasurementPoint p : list) {

@@ -34,6 +34,8 @@ public class TestReaderSimulator extends TimerTask {
         }
         reader.setCount(reader.getCount() + 1);
         
+        MainContainer.getMainFrame().setSpeedCaption(reader.getMeasurement().getCurrentSpeed());
+        
         measurementsCount++;
         //1462 = 100км
         if ((measurementsCount > 20 )) {

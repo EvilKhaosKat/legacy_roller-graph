@@ -30,6 +30,7 @@ public class ReadingTimerTask extends TimerTask {
             this.cancel();
 
         }
+        MainContainer.getMainFrame().setSpeedCaption(reader.getMeasurement().getCurrentSpeed());
         reader.setCount(reader.getCount() + 1);
         int value = MainContainer.getSi30Counter().readCounterValue();
         reader.getMeasurement().addMeasure(value);

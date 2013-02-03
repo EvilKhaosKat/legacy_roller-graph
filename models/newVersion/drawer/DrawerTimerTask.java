@@ -25,12 +25,15 @@ public class DrawerTimerTask extends TimerTask {
     @Override
     public void run() {
         Double temp;
-        MainContainer.getMainFrame().setSpeedCaption(drawer.getMeasurement().getCurrentSpeed());
+        //TODO возможно надо оставить тут отрисовку. логично было бы
+        //MainContainer.getMainFrame().setSpeedCaption(drawer.getMeasurement().getCurrentSpeed());
+        //MainContainer.getMainFrame().setSpeedCaption(drawer.getMeasurement().getCurrentSpeed());
         
         //System.out.println("drawer.getMeasurement().getListNeedfulSpeedsData().size()"+drawer.getMeasurement().getListNeedfulSpeedsData().size());
         //System.out.println("drawer.getMeasurement().getListNeedfulSpeedsData().size()"+drawer.getMeasurement().getListRawData().size());
         //System.out.println("drawer.getMeasurement().getListNeedfulSpeedsData().size()"+drawer.getMeasurement().getListSpeedsData().size());
         if (drawer.getCount()<drawer.getMeasurement().getListNeedfulSpeedsData().size()) {
+            //TODO тот ли список берется тут?
             for (int i=drawer.getCount();i<drawer.getMeasurement().getListNeedfulSpeedsData().size();i++) {
                 temp = (double)i*drawer.getFrequency()/1000;
                 series1.add(temp,drawer.getMeasurement().getListNeedfulSpeedsData().get(i));

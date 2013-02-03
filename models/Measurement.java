@@ -76,6 +76,10 @@ public class Measurement implements Serializable{
     public void setListSpeedsData(List<Double> listSpeedsData) {
         this.listSpeedsData = listSpeedsData;
     }
+
+    public void setListNeedfulSpeedsData(List<Double> listNeedfulSpeedsData) {
+        this.listNeedfulSpeedsData = listNeedfulSpeedsData;
+    }
     
     
 }

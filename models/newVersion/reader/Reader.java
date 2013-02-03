@@ -32,7 +32,8 @@ public class Reader {
         //MainContainer.getListOfCoordinates().clear();
         count = 0;
         timer = new Timer();
-        task = new ReadingTimerTask(this);
+        //task = new ReadingTimerTask(this);
+        task = new TestReaderSimulator(this);
         //task.
         timer.scheduleAtFixedRate(task, 0, frequency);
     }

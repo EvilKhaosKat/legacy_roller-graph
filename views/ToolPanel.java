@@ -22,7 +22,7 @@ public class ToolPanel extends javax.swing.JPanel {
     public void setSpeedCaption(String speed) {
         //speedLabel.setText(speed);
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -64,16 +64,20 @@ public class ToolPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void startAndStopButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startAndStopButtonActionPerformed
-        if (startAndStopButton.getText().equals("Start") ) {
-            MainContainer.getMainFrame().connectMenuItemActionPerfomed(evt);
-            MainContainer.getMainFrame().menuItemStartActionPerformed(evt);
-            startAndStopButton.setText("Stop");
+        if (startAndStopButton.getText().equals("Start")) {
+            try {
+                MainContainer.getMainFrame().connectMenuItemActionPerfomed(evt);
+                MainContainer.getMainFrame().menuItemStartActionPerformed(evt);
+                startAndStopButton.setText("Stop");
+            } catch (Exception e) {
+                System.out.println("Exception: "+e.getMessage());
+            }
+
         } else {
             MainContainer.getMainFrame().menuItemStopActionPerformed(evt);
             startAndStopButton.setText("Start");
         }
     }//GEN-LAST:event_startAndStopButtonActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton startAndStopButton;
     // End of variables declaration//GEN-END:variables

@@ -1,11 +1,11 @@
 package views;
 
-import connection.ComPortConnection;
+import org.extdev.connection.ComPortConnection;
 import controllers.Supervisor;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 
-import device.si30.SI30Counter;
+import org.extdev.device.si30.SI30Counter;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -20,16 +20,14 @@ import javax.swing.JSeparator;
 import javax.swing.JSplitPane;
 import javax.swing.JTextField;
 
-import models.oldVersion.DrawingOrganizer;
 import models.MainContainer;
-import models.oldVersion.ReadingOrganizer;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.xy.XYSeriesCollection;
 
-import device.si30.SI30Counter;
+import org.extdev.device.si30.SI30Counter;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.io.FileNotFoundException;
@@ -43,6 +41,7 @@ import java.math.RoundingMode;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import models.Measurement;
 import models.newVersion.drawer.Drawer;
 import models.newVersion.reader.Reader;
@@ -69,9 +68,9 @@ public class MainFrame extends JFrame {
     private JPanel chartPanel;
     private XYSeriesCollection dataset;
     private JPanel toolPanel;
-    private JLabel speed;
+    //private JLabel speed;
     private JLabel peakSpeed;
-    private JButton startAndStopButton;
+    //private JButton startAndStopButton;
     private IndicationPanel leftIndicationPanel;
     private IndicationPanel rightIndicationPanel;
     /**
@@ -100,7 +99,11 @@ public class MainFrame extends JFrame {
         connectMenuItem = new JMenuItem("Подключить");
         connectMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                connectMenuItemActionPerfomed(evt);
+                try{
+                    connectMenuItemActionPerfomed(evt);
+                } catch (Exception e) {
+                    System.out.println("Exception: "+e.getMessage());
+                }
             }
         });
         menuFile.add(connectMenuItem);
@@ -172,7 +175,6 @@ public class MainFrame extends JFrame {
 
     private void createChartField() {
         dataset = new XYSeriesCollection();
-        DrawingOrganizer.setDataset(dataset);
 
         rollerDiagrammer = ChartFactory.createXYLineChart(null, null, null, dataset, PlotOrientation.VERTICAL, false, false, false);
         chartPanel = new JPanel();
@@ -227,7 +229,7 @@ public class MainFrame extends JFrame {
             try {
                 fos.close();
             } catch (IOException ex) {
-                System.out.println("Error during trying to close fos after exception.");
+                System.out.println("Error during trying to close fos after exception."+ex.getMessage());
             }
         }
 
@@ -267,10 +269,17 @@ public class MainFrame extends JFrame {
             System.out.println("Using not standart com port pref." + MainContainer.getComPortPreferences().getPortName());
             ((ComPortConnection) si30Counter.getConnection()).setSerialPortPreferences(MainContainer.getComPortPreferences());
         }
-        si30Counter.connect();
-        System.out.println("Connected");
+        try{
+            si30Counter.connect();
+            System.out.println("Connected");
+            Supervisor.startThatProcess();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            throw new RuntimeException(e);
+        }
+        
 
-        Supervisor.startThatProcess();
+        
     }
 
     // обработчики нажатий
@@ -353,7 +362,7 @@ public class MainFrame extends JFrame {
          rightIndicationPanel.addElementPanel(tempSpeedIndicationPanel);*/
 
         //TODO исправить и еще один костыль
-        startAndStopButton = new JButton("Start");
+        //startAndStopButton = new JButton("Start");
         //startAndStopButton.setPreferredSize(new Dimension(173, 94));
         toolPanel = new ToolPanel();
         rightIndicationPanel.add(toolPanel);

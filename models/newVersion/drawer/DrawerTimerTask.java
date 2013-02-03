@@ -6,7 +6,6 @@ package models.newVersion.drawer;
 
 import java.util.TimerTask;
 import models.MainContainer;
-import models.oldVersion.ReadingOrganizer;
 import org.jfree.data.xy.XYSeries;
 
 /**

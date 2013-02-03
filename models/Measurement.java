@@ -72,4 +72,10 @@ public class Measurement implements Serializable{
     	if (listSpeedsData.size() == 0) return 0;
     	return listSpeedsData.get(listSpeedsData.size()-1)/*+specialPseudoSpeed*/;
     }
+
+    public void setListSpeedsData(List<Double> listSpeedsData) {
+        this.listSpeedsData = listSpeedsData;
+    }
+    
+    
 }

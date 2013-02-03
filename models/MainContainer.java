@@ -32,6 +32,16 @@ public class MainContainer {
     public static double speedThirdThreshold = 30;//438.75; //20 km
     
     private static ComPortPreferences comPortPreferences;
+   
+    public final static int WORKMODE_REALTIME_USUAL = 1;
+    public final static int WORKMODE_POSTPROCESSING_THREE_AVERAGE = 2;
+    public final static int WORKMODE_POSTPROCESSING_THREE_SIMPLIFIED = 3;
+    
+    private static int workMode = WORKMODE_REALTIME_USUAL;
+   
+    public static String WORKMODE_TITLE_REALTIME_USUAL = "Режим реального времени.";
+    public static String WORKMODE_TITLE_POSTPROCESSING_THREE_AVERAGE = "Режим трёх измерений. График среднего.";
+    public static String WORKMODE_TITLE_POSTPROCESSING_THREE_SIMPLIFIED = "Режим трёх измерений. График упрощенный.";
     
     public static void setComPortName(String comPortName) {
         if (comPortPreferences == null) {
@@ -73,7 +83,13 @@ public class MainContainer {
     public static void setDefaultEtalonMeasurementFilename(String defaultEtalonMeasurementFilename) {
         MainContainer.defaultEtalonMeasurementFilename = defaultEtalonMeasurementFilename;
     }
-    
-    
+
+    public static int getWorkMode() {
+        return workMode;
+    }
+
+    public static void setWorkMode(int workMode) {
+        MainContainer.workMode = workMode;
+    }
     
 }

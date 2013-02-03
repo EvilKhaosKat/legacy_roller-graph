@@ -17,7 +17,7 @@ public class EntryController {
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		test = new MainFrame("Roller graph");
+		test = new MainFrame("Roller graph. Режим реального времени.");
 		test.setVisible(true);
 		MainContainer.setMainFrame(test);
 	}

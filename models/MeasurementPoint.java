@@ -7,12 +7,20 @@ package models;
 public class MeasurementPoint {
     Double value=0.0;
     Long timeInMillis = 0L;
-
+    //TODO исправить костыль
+    int numberInMeasurement = 0;
+    
     private MeasurementPoint(){}
     
     public MeasurementPoint(Double v) {
         value=v;
         timeInMillis = System.currentTimeMillis();
+    }
+    
+    public MeasurementPoint(Double v, Long time, int n) {
+        value = v;
+        timeInMillis = time;
+        numberInMeasurement = n;
     }
     
     public Double getValue() {
@@ -29,6 +37,14 @@ public class MeasurementPoint {
 
     public void setTimeInMillis(Long time) {
         this.timeInMillis = time;
+    }
+
+    public int getNumberInMeasurement() {
+        return numberInMeasurement;
+    }
+
+    public void setNumberInMeasurement(int numberInMeasurement) {
+        this.numberInMeasurement = numberInMeasurement;
     }
     
     

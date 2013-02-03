@@ -114,6 +114,11 @@ public class PostProcessorThreeAverage {
             listOfAverage.add(listOfFirstGraphic.get(i) + listOfSecondGraphic.get(i) + listOfThirdGraphic.get(i)/3);
         }
         postprocessedMeasurement.setListSpeedsData(listOfAverage);
+        
+        System.out.println("--------------------------------------------------");
+        System.out.println("время разгона из 1 графика "+pmax1.getTimeInMillis());
+        System.out.println("время выбега из 1 графика "+(pMin1.getTimeInMillis()-pmax1.getTimeInMillis()));
+        System.out.println("--------------------------------------------------");
         return postprocessedMeasurement;
     }
 

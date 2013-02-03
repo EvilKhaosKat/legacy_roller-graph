@@ -8,7 +8,7 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import connection.ComPortPreferences;
+import org.extdev.connection.ComPortPreferences;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
@@ -91,7 +91,7 @@ public class SerialPortSettings extends JPanel {
     }
     
     private void setSerialPortsContent() {
-        List<String> serialPortsList = ComPortPreferences.getComPortsAsStringList();
+        List<String> serialPortsList = org.extdev.connection.ComPortPreferences.getComPortsAsStringList();
         
         for (String serialPortName : serialPortsList) {
             serialPorts.addItem(serialPortName);

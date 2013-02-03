@@ -1,7 +1,7 @@
 package models;
 
-import connection.ComPortPreferences;
-import device.si30.SI30Counter;
+import org.extdev.connection.ComPortPreferences;
+import org.extdev.device.si30.SI30Counter;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -12,15 +12,6 @@ import views.MainFrame;
  * @author KhaosKat
  */
 public class MainContainer {
-    //старый вариант
-    private static List<Integer> listOfCoordinatesNotSync = new LinkedList();
-    private static List<Integer> listOfCoordinates =
-            Collections.synchronizedList(listOfCoordinatesNotSync);
-    ////////////////////////////////////////////////////////////////////////////
-    
-    
-    
-    
     private static List<Measurement> listMeasurementsNotSync = new LinkedList();
     private static List<Measurement> listMeasurements =
             Collections.synchronizedList(listMeasurementsNotSync);
@@ -59,10 +50,6 @@ public class MainContainer {
         return si30Counter;
     }
 
-    public static List<Integer> getListOfCoordinates() {
-        return listOfCoordinates;
-    }
-    
     public static MainFrame getMainFrame() {
     	return mainFrame;
     }

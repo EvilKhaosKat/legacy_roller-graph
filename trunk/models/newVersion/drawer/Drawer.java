@@ -27,6 +27,7 @@ public class Drawer {
         measurement=reader.getMeasurement();
     }
     
+    //TODO поле принудительной остановки не используется, отрисовщик на самом деле не останавливается. исправить
     public Drawer(Measurement m, XYSeriesCollection dataset, boolean b) {
         //reader=r;
         this.dataset=dataset;

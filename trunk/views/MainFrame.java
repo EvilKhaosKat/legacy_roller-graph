@@ -45,6 +45,7 @@ import javax.swing.JOptionPane;
 import models.Measurement;
 import models.newVersion.drawer.Drawer;
 import models.newVersion.reader.Reader;
+import models.postprocessing.PostProcessorThreeAverage;
 import views.optionsframe.SerialPortSettings;
 
 /**
@@ -56,6 +57,7 @@ public class MainFrame extends JFrame {
     private JMenu menuFile;
     private JMenu menuOptions;
     private JMenu testMenu;
+    private JMenu workModeMenu;
     private JMenuBar mainMenuBar;
     private JMenuItem testMenuItem1;
     private JMenuItem testMenuItem2;
@@ -63,13 +65,16 @@ public class MainFrame extends JFrame {
     private JMenuItem loadEtalonMenuItem;
     private JMenuItem menuOptionsItem1;
     private JMenuItem connectMenuItem;
+    private JMenuItem workModeRealtimeUsual;
+    private JMenuItem workModeThreeAverage;
+    private JMenuItem workModeThreeSimplified;
     private JFreeChart rollerDiagrammer;
     private ChartPanel contentChartPanel;
     private JPanel chartPanel;
     private XYSeriesCollection dataset;
     private JPanel toolPanel;
     //private JLabel speed;
-    private JLabel peakSpeed;
+    //private JLabel peakSpeed;
     //private JButton startAndStopButton;
     private IndicationPanel leftIndicationPanel;
     private IndicationPanel rightIndicationPanel;
@@ -77,19 +82,6 @@ public class MainFrame extends JFrame {
      *
      */
     private static final long serialVersionUID = -1587654314948932245L;
-
-    private void createToolPanel() {
-        toolPanel = new ToolPanel();
-        /*toolPanel = new JPanel();
-         toolPanel.setLayout(new BoxLayout(toolPanel, BoxLayout.PAGE_AXIS));
-         speed = new JLabel("Speed");
-         toolPanel.add(speed);
-         peakSpeed = new JLabel("Peak speed:");
-         toolPanel.add(peakSpeed);
-         startAndStopButton = new JButton("Start");
-         toolPanel.add(startAndStopButton);*/
-        this.add(toolPanel, BorderLayout.LINE_END);
-    }
 
     private void createMenu() {
         mainMenuBar = new JMenuBar();
@@ -99,10 +91,10 @@ public class MainFrame extends JFrame {
         connectMenuItem = new JMenuItem("Подключить");
         connectMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                try{
+                try {
                     connectMenuItemActionPerfomed(evt);
                 } catch (Exception e) {
-                    System.out.println("Exception: "+e.getMessage());
+                    System.out.println("Exception: " + e.getMessage());
                 }
             }
         });
@@ -164,6 +156,38 @@ public class MainFrame extends JFrame {
         mainMenuBar.add(testMenu);
 
 
+
+        workModeMenu = new JMenu("Режим работы");
+        workModeRealtimeUsual = new JMenuItem(MainContainer.WORKMODE_TITLE_REALTIME_USUAL);
+        workModeRealtimeUsual.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MainContainer.setWorkMode(MainContainer.WORKMODE_REALTIME_USUAL);
+                MainContainer.getMainFrame().setTitle("Roller graph. " + MainContainer.WORKMODE_TITLE_REALTIME_USUAL);
+            }
+        });
+        workModeMenu.add(workModeRealtimeUsual);
+
+        workModeThreeAverage = new JMenuItem(MainContainer.WORKMODE_TITLE_POSTPROCESSING_THREE_AVERAGE);
+        workModeThreeAverage.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MainContainer.setWorkMode(MainContainer.WORKMODE_POSTPROCESSING_THREE_AVERAGE);
+                MainContainer.getMainFrame().setTitle("Roller graph. " + MainContainer.WORKMODE_TITLE_POSTPROCESSING_THREE_AVERAGE);
+            }
+        });
+        workModeMenu.add(workModeThreeAverage);
+
+        workModeThreeSimplified = new JMenuItem(MainContainer.WORKMODE_TITLE_POSTPROCESSING_THREE_SIMPLIFIED);
+        workModeThreeSimplified.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MainContainer.setWorkMode(MainContainer.WORKMODE_POSTPROCESSING_THREE_SIMPLIFIED);
+                MainContainer.getMainFrame().setTitle("Roller graph. " + MainContainer.WORKMODE_TITLE_POSTPROCESSING_THREE_SIMPLIFIED);
+            }
+        });
+        workModeMenu.add(workModeThreeSimplified);
+
+        mainMenuBar.add(workModeMenu);
+
+
         setJMenuBar(mainMenuBar);
 
         //startServer.addActionListener(new java.awt.event.ActionListener() {
@@ -202,15 +226,64 @@ public class MainFrame extends JFrame {
         MainContainer.getListMeasurements().add(measurement);
         Reader r = new models.newVersion.reader.Reader(measurement);
         r.startReading();
-        Drawer d = new Drawer(r, dataset);
-        d.startDrawing();
-        //DrawingOrganizer.startDrawing();
+        Drawer d = null;
+        //TODO проверить
+        switch (MainContainer.getWorkMode()) {
+            case MainContainer.WORKMODE_REALTIME_USUAL:
+                System.out.println("WORKMODE_REALTIME_USUAL");
+                d = new Drawer(r, dataset);
+                d.startDrawing();
+                //DrawingOrganizer.startDrawing();
+                break;
+                
+            case MainContainer.WORKMODE_POSTPROCESSING_THREE_AVERAGE:
+                System.out.println("WORKMODE_POSTPROCESSING_THREE_AVERAGE");
+                //ибо постоработка будет после нажатия "стоп" то ничего не делаем более
+                break;
+
+            case MainContainer.WORKMODE_POSTPROCESSING_THREE_SIMPLIFIED:
+                System.out.println("WORKMODE_POSTPROCESSING_THREE_SIMPLIFIED");
+                break;
+        }
+                
+        
+        /*Measurement postprocessedMeasurement = null;
+                
+                //TODO создать обработанный экземпляр
+                d = new Drawer(postprocessedMeasurement, dataset, true);
+                d.startDrawing();*/
+
     }
 
     public void menuItemStopActionPerformed(java.awt.event.ActionEvent evt) {
         //TODO обработчик нажатия
         //DrawingOrganizer.startDrawing();
         MainContainer.isReading = false;
+        Drawer d = null;
+        //TODO потенциальный баг. если режим работы сменят после начала работы - будет не классно. Надо бы наверно блочить эту возможность
+        switch (MainContainer.getWorkMode()) {
+            case MainContainer.WORKMODE_REALTIME_USUAL:
+                System.out.println("WORKMODE_REALTIME_USUAL");
+                //ибо реалтайм - ничего более особенного делать не надо
+                break;
+                
+            case MainContainer.WORKMODE_POSTPROCESSING_THREE_AVERAGE:
+                System.out.println("WORKMODE_POSTPROCESSING_THREE_AVERAGE");
+               
+                Measurement postprocessedMeasurement = null;
+                //TODO создать обработанный экземпляр "измерения"
+                PostProcessorThreeAverage postProcessor = new PostProcessorThreeAverage();
+                postprocessedMeasurement = postProcessor.doPostProcess(postprocessedMeasurement);
+                //переприсвоим последнее измерение на 
+                MainContainer.getListMeasurements().set(MainContainer.getListMeasurements().size(), postprocessedMeasurement);
+                d = new Drawer(postprocessedMeasurement, dataset, true);
+                d.startDrawing();
+                break;
+
+            case MainContainer.WORKMODE_POSTPROCESSING_THREE_SIMPLIFIED:
+                System.out.println("WORKMODE_POSTPROCESSING_THREE_SIMPLIFIED");
+                break;
+        }
     }
 
     public void menuItemSaveEtalonActionPerformed(ActionEvent evt) {
@@ -229,7 +302,7 @@ public class MainFrame extends JFrame {
             try {
                 fos.close();
             } catch (IOException ex) {
-                System.out.println("Error during trying to close fos after exception."+ex.getMessage());
+                System.out.println("Error during trying to close fos after exception." + ex.getMessage());
             }
         }
 
@@ -237,30 +310,20 @@ public class MainFrame extends JFrame {
     }
 
     public void menuItemLoadEtalonActionPerformed(ActionEvent evt) {
-
         Measurement measurement = null;
-
-        
         try {
             FileInputStream fis = new FileInputStream(MainContainer.getDefaultEtalonMeasurementFilename());
             ObjectInputStream oin = new ObjectInputStream(fis);
             measurement = (Measurement) oin.readObject();
+
+            //TestSerial ts = (TestSerial) oin.readObject();
+            MainContainer.getListMeasurements().add(measurement);
+
+            Drawer d = new Drawer(measurement, dataset, true);
+            d.startDrawing();
         } catch (Exception ex) {
-            System.out.println("Error during loading etalon."+ex.getMessage());
+            System.out.println("Error during loading etalon." + ex.getMessage());
         }
-
-        //TestSerial ts = (TestSerial) oin.readObject();
-
-        MainContainer.getListMeasurements().add(measurement);
-
-        Drawer d = new Drawer(measurement, dataset, true);
-        d.startDrawing();
-
-
-
-
-
-
     }
 
     public void connectMenuItemActionPerfomed(java.awt.event.ActionEvent evt) {
@@ -269,7 +332,7 @@ public class MainFrame extends JFrame {
             System.out.println("Using not standart com port pref." + MainContainer.getComPortPreferences().getPortName());
             ((ComPortConnection) si30Counter.getConnection()).setSerialPortPreferences(MainContainer.getComPortPreferences());
         }
-        try{
+        try {
             si30Counter.connect();
             System.out.println("Connected");
             Supervisor.startThatProcess();
@@ -277,9 +340,9 @@ public class MainFrame extends JFrame {
             JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             throw new RuntimeException(e);
         }
-        
 
-        
+
+
     }
 
     // обработчики нажатий
@@ -298,13 +361,12 @@ public class MainFrame extends JFrame {
         super(title);
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         createGUI();
-
     }
 
     public void setSpeedCaption(double newSpeed) {
         //TODO каждый раз создавать обьект идея не самая хорошая, может быть можно сделать лучше
         Double d = new Double(newSpeed);
-        Double bd = new BigDecimal(d).setScale(2,RoundingMode.HALF_UP).doubleValue();
+        Double bd = new BigDecimal(d).setScale(2, RoundingMode.HALF_UP).doubleValue();
         //d=d/14.625; //40km=585. 585/40 = 14.625 
         System.out.println("Setting current speed:" + d);
         ((ValueIndicationPanel) rightIndicationPanel.innerPanelList.get(0)).setSpeedValue(bd.toString());

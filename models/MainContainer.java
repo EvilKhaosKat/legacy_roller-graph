@@ -42,6 +42,12 @@ public class MainContainer {
     public static String WORKMODE_TITLE_REALTIME_USUAL = "Режим реального времени.";
     public static String WORKMODE_TITLE_POSTPROCESSING_THREE_AVERAGE = "Режим трёх измерений. График среднего.";
     public static String WORKMODE_TITLE_POSTPROCESSING_THREE_SIMPLIFIED = "Режим трёх измерений. График упрощенный.";
+
+    
+    public final static int REAL_DEVICE = 0;
+    public final static int SIMPLE_RANDOM_GENERATOR = 1;
+    
+    private static int dataSource = REAL_DEVICE;
     
     public static void setComPortName(String comPortName) {
         if (comPortPreferences == null) {
@@ -90,6 +96,14 @@ public class MainContainer {
 
     public static void setWorkMode(int workMode) {
         MainContainer.workMode = workMode;
+    }
+
+    public static int getDataSource() {
+        return dataSource;
+    }
+
+    public static void setDataSource(int dataSource) {
+        MainContainer.dataSource = dataSource;
     }
     
 }

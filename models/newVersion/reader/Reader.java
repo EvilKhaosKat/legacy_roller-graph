@@ -5,7 +5,6 @@ import java.util.TimerTask;
 import models.MainContainer;
 import models.Measurement;
 
-
 /**
  *
  * @author Kat
@@ -17,23 +16,26 @@ public class Reader {
     private int count = 0; //количество прочитанных значений
     private Timer timer;
     private TimerTask task;//  = new ReadingTimerTask();
-    
     private Measurement measurement;
 
     public Reader(Measurement m) {
-        measurement=m;
-        
+        measurement = m;
+
     }
-    
-    private Reader() {}
-    
+
+    private Reader() {
+    }
+
     public void startReading() {
-        MainContainer.isReading=true;
+        MainContainer.isReading = true;
         //MainContainer.getListOfCoordinates().clear();
         count = 0;
         timer = new Timer();
-        //task = new ReadingTimerTask(this);
-        task = new TestReaderSimulator(this);
+        if (MainContainer.getDataSource() == MainContainer.REAL_DEVICE) {
+            task = new ReadingTimerTask(this);
+        } else if (MainContainer.getDataSource() == MainContainer.SIMPLE_RANDOM_GENERATOR) {
+            task = new TestReaderSimulator(this);
+        }
         //task.
         timer.scheduleAtFixedRate(task, 0, frequency);
     }
@@ -70,6 +72,4 @@ public class Reader {
     public Measurement getMeasurement() {
         return measurement;
     }
-    
-    
 }

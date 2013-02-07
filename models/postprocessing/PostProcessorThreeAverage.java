@@ -191,19 +191,19 @@ public class PostProcessorThreeAverage {
         //Long accelerationTime3 = pmax3.getTimeInMillis()-pmin2.getTimeInMillis();
         //Long decelerationTime3 = pmin3.getTimeInMillis()-pmax3.getTimeInMillis();
         
-        List<Double> accelerationAndDecelerationTime = PostProcessor.getAccelerationAndDecelerationTime(listOfAverage);
+        //List<Double> accelerationAndDecelerationTime = PostProcessor.getAccelerationAndDecelerationTime(listOfAverage);
         
-        double accelerationTimeResult = 0L;//(accelerationTime1+accelerationTime2+accelerationTime3)/3;
-        double decelerationTimeResult = 0L;//(decelerationTime1+decelerationTime2+decelerationTime3)/3;
+        //double accelerationTimeResult = 0L;//(accelerationTime1+accelerationTime2+accelerationTime3)/3;
+        //double decelerationTimeResult = 0L;//(decelerationTime1+decelerationTime2+decelerationTime3)/3;
         
-        accelerationTimeResult = accelerationAndDecelerationTime.get(0);
-        decelerationTimeResult = accelerationAndDecelerationTime.get(1);
+        //accelerationTimeResult = accelerationAndDecelerationTime.get(0);
+        //decelerationTimeResult = accelerationAndDecelerationTime.get(1);
         
-        System.out.println("время разгона итоговое:"+accelerationTimeResult);
-        System.out.println("время выбега итоговое:"+decelerationTimeResult);
+        //System.out.println("время разгона итоговое:"+accelerationTimeResult);
+        //System.out.println("время выбега итоговое:"+decelerationTimeResult);
         
-        MainContainer.getMainFrame().setAccelerateTimeCaption(accelerationTimeResult);
-        MainContainer.getMainFrame().setDecelerateTimeCaption(decelerationTimeResult);
+        //MainContainer.getMainFrame().setAccelerateTimeCaption(accelerationTimeResult);
+        //MainContainer.getMainFrame().setDecelerateTimeCaption(decelerationTimeResult);
         
         
         return postprocessedMeasurement;

@@ -4,7 +4,9 @@
  */
 package views;
 
+import java.util.List;
 import models.MainContainer;
+import models.postprocessing.PostProcessor;
 
 /**
  *
@@ -73,13 +75,31 @@ public class ToolPanel extends javax.swing.JPanel {
                 MainContainer.getMainFrame().menuItemStartActionPerformed(evt);
                 startAndStopButton.setText("Stop");
             } catch (Exception e) {
-                System.out.println("Exception: "+e.getMessage());
+                System.out.println("Exception: " + e.getMessage());
             }
 
         } else {
             MainContainer.getMainFrame().menuItemStopActionPerformed(evt);
             startAndStopButton.setText("Start");
+            
+            List<Double> accelerationAndDecelerationTime = PostProcessor.getAccelerationAndDecelerationTime(
+                    MainContainer.getListMeasurements().get(
+                        MainContainer.getListMeasurements().size()-1).getListNeedfulSpeedsData());
+
+            double accelerationTimeResult = 0L;//(accelerationTime1+accelerationTime2+accelerationTime3)/3;
+            double decelerationTimeResult = 0L;//(decelerationTime1+decelerationTime2+decelerationTime3)/3;
+
+            accelerationTimeResult = accelerationAndDecelerationTime.get(0);
+            decelerationTimeResult = accelerationAndDecelerationTime.get(1);
+
+            System.out.println("время разгона итоговое:" + accelerationTimeResult);
+            System.out.println("время выбега итоговое:" + decelerationTimeResult);
+
+            MainContainer.getMainFrame().setAccelerateTimeCaption(accelerationTimeResult);
+            MainContainer.getMainFrame().setDecelerateTimeCaption(decelerationTimeResult);
         }
+
+
     }//GEN-LAST:event_startAndStopButtonActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton startAndStopButton;

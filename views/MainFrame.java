@@ -375,7 +375,21 @@ public class MainFrame extends JFrame {
         //((ToolPanel) toolPanel).setSpeedCaption(d.toString());
         //speed.setText("Speed: "+d.toString());
     }
-
+    
+    public void setAccelerateTimeCaption(double accTime) {
+        Double a = new Double(accTime);
+        a=a/1000; //перевод из миллисекунд в секунды
+        ((ValueIndicationPanel) rightIndicationPanel.innerPanelList.get(3)).setSpeedValue(a.toString());
+        //третья индикационная панель - панель со значением времени разгона
+    }
+    
+    public void setDecelerateTimeCaption(double decTime) {
+        Double d = new Double(decTime);
+        d=d/1000; //перевод из миллисекунд в секунды
+        ((ValueIndicationPanel) rightIndicationPanel.innerPanelList.get(4)).setSpeedValue(d.toString());
+        //четвертая индикационная панель - панель со значением времени выбега
+    }
+    
     private void createLeftIndicationPanel() {
         leftIndicationPanel = new IndicationPanel();
         this.add(leftIndicationPanel, BorderLayout.LINE_START);
@@ -416,6 +430,11 @@ public class MainFrame extends JFrame {
         tempSpeedIndicationPanel = new ValueIndicationPanel("40.0", "Vmin");
         rightIndicationPanel.addElementPanel(tempSpeedIndicationPanel);
         tempSpeedIndicationPanel = new ValueIndicationPanel("100.0", "Vmax");
+        rightIndicationPanel.addElementPanel(tempSpeedIndicationPanel);
+        
+        tempSpeedIndicationPanel = new ValueIndicationPanel("0.0", "Время разгона, с");
+        rightIndicationPanel.addElementPanel(tempSpeedIndicationPanel);
+        tempSpeedIndicationPanel = new ValueIndicationPanel("0.0", "Время выбега, с");
         rightIndicationPanel.addElementPanel(tempSpeedIndicationPanel);
 
         /*tempSpeedIndicationPanel = new ValueIndicationPanel("40.0","t разгона");

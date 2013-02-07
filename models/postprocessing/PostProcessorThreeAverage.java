@@ -152,7 +152,7 @@ public class PostProcessorThreeAverage {
         
         
         List<Double> listOfAverage = new LinkedList<Double>();
-        //TODO исправить логическую ошибку
+
         int maximumListSize = 0;
         maximumListSize = listOfFirstGraphic.size()>listOfSecondGraphic.size() ? listOfFirstGraphic.size() : listOfSecondGraphic.size();
         maximumListSize = maximumListSize >listOfThirdGraphic.size() ? maximumListSize : listOfThirdGraphic.size();
@@ -195,6 +195,10 @@ public class PostProcessorThreeAverage {
         
         System.out.println("время разгона итоговое:"+accelerationTimeResult);
         System.out.println("время выбега итоговое:"+decelerationTimeResult);
+        
+        MainContainer.getMainFrame().setAccelerateTimeCaption(accelerationTimeResult);
+        MainContainer.getMainFrame().setDecelerateTimeCaption(decelerationTimeResult);
+        
         
         return postprocessedMeasurement;
         //return tempM;

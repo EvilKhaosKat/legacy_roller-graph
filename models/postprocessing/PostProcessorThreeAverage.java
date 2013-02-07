@@ -98,9 +98,9 @@ public class PostProcessorThreeAverage {
         List<MeasurementPoint> listOfFirstPeakMinValues = new LinkedList<MeasurementPoint>();
         List<MeasurementPoint> listOfSecondPeakMinValues = new LinkedList<MeasurementPoint>();
         List<MeasurementPoint> listOfThirdPeakMinValues = new LinkedList<MeasurementPoint>();
-        MeasurementPoint pMin1 = null;
-        MeasurementPoint pMin2 = null;
-        MeasurementPoint pMin3 = null;
+        MeasurementPoint pmin1 = null;
+        MeasurementPoint pmin2 = null;
+        MeasurementPoint pmin3 = null;
 
         x = y = 0;
         for (x = 0; x < listOfNearToBeMinValues.size() - 1; x++) {
@@ -122,14 +122,14 @@ public class PostProcessorThreeAverage {
         listOfThirdPeakMinValues = listOfNearToBeMinValues.subList(y, listOfNearToBeMinValues.size() - 1);
         //три "пика" получены
 
-        pMin1 = getMinFromMeasurementsList(listOfFirstPeakMinValues);
-        pMin2 = getMinFromMeasurementsList(listOfSecondPeakMinValues);
-        pMin3 = getMinFromMeasurementsList(listOfThirdPeakMinValues);
+        pmin1 = getMinFromMeasurementsList(listOfFirstPeakMinValues);
+        pmin2 = getMinFromMeasurementsList(listOfSecondPeakMinValues);
+        pmin3 = getMinFromMeasurementsList(listOfThirdPeakMinValues);
 
         System.out.println("--------------------------------------------------");
-        System.out.println("pmin1:" + pMin1.getValue() +" "+ pMin1.getNumberInMeasurement()+" "+ pMin1.getTimeInMillis());
-        System.out.println("pmin2:" + pMin2.getValue() +" "+ pMin2.getNumberInMeasurement()+" "+ pMin2.getTimeInMillis());
-        System.out.println("pmin3:" + pMin3.getValue() +" "+ pMin3.getNumberInMeasurement()+" "+ pMin3.getTimeInMillis());
+        System.out.println("pmin1:" + pmin1.getValue() +" "+ pmin1.getNumberInMeasurement()+" "+ pmin1.getTimeInMillis());
+        System.out.println("pmin2:" + pmin2.getValue() +" "+ pmin2.getNumberInMeasurement()+" "+ pmin2.getTimeInMillis());
+        System.out.println("pmin3:" + pmin3.getValue() +" "+ pmin3.getNumberInMeasurement()+" "+ pmin3.getTimeInMillis());
         System.out.println("--------------------------------------------------");
 
         //все крайние точки известны. можно вычислять времена, можно выделить три отдедельных графика
@@ -139,9 +139,9 @@ public class PostProcessorThreeAverage {
         List<Double> listOfSecondGraphic = new LinkedList<Double>();
         List<Double> listOfThirdGraphic = new LinkedList<Double>();
 
-        listOfFirstGraphic = listOfSpeeds.subList(0, pMin1.getNumberInMeasurement());
-        listOfSecondGraphic = listOfSpeeds.subList(pMin1.getNumberInMeasurement(), pMin2.getNumberInMeasurement());
-        listOfThirdGraphic = listOfSpeeds.subList(pMin2.getNumberInMeasurement(), pMin3.getNumberInMeasurement());
+        listOfFirstGraphic = listOfSpeeds.subList(0, pmin1.getNumberInMeasurement());
+        listOfSecondGraphic = listOfSpeeds.subList(pmin1.getNumberInMeasurement(), pmin2.getNumberInMeasurement());
+        listOfThirdGraphic = listOfSpeeds.subList(pmin2.getNumberInMeasurement(), pmin3.getNumberInMeasurement());
 
         
         System.out.println("--------------------------------------------------");
@@ -153,17 +153,48 @@ public class PostProcessorThreeAverage {
         
         List<Double> listOfAverage = new LinkedList<Double>();
         //TODO исправить логическую ошибку
-        for (int i = 0; i < 30; i++) {
-            listOfAverage.add((listOfFirstGraphic.get(i) + listOfSecondGraphic.get(i) + listOfThirdGraphic.get(i)) / 3);
+        int maximumListSize = 0;
+        maximumListSize = listOfFirstGraphic.size()>listOfSecondGraphic.size() ? listOfFirstGraphic.size() : listOfSecondGraphic.size();
+        maximumListSize = maximumListSize >listOfThirdGraphic.size() ? maximumListSize : listOfThirdGraphic.size();
+        System.out.println("Максимальная длина списка координат равна "+maximumListSize);
+        
+        Double speedFirst = new Double("0");
+        Double speedSecond = new Double("0");
+        Double speedThird = new Double("0");
+        Double resultingSpeed = new Double("0");
+        Double minSpeed = new Double (MainContainer.minSpeed);
+        for (int i = 0; i < maximumListSize; i++) {
+            //listOfAverage.add((listOfFirstGraphic.get(i) + listOfSecondGraphic.get(i) + listOfThirdGraphic.get(i)) / 3);
+            speedFirst  = i<(listOfFirstGraphic.size()-1)    ? listOfFirstGraphic.get(i)-1  : minSpeed;
+            speedSecond = i<(listOfSecondGraphic.size()-1)   ? listOfSecondGraphic.get(i)-1 : minSpeed;
+            speedThird  = i<(listOfThirdGraphic.size()-1)    ? listOfThirdGraphic.get(i)-1  : minSpeed;
+            resultingSpeed = (speedFirst + speedSecond + speedThird)/3;
+            listOfAverage.add(resultingSpeed);
         }
         postprocessedMeasurement.setListNeedfulSpeedsData(listOfAverage);
         //Measurement tempM = new Measurement();
         //tempM.setListSpeedsData(listOfAverage);
         
-        System.out.println("--------------------------------------------------");
-        System.out.println("время разгона из 1 графика " + pmax1.getTimeInMillis());
-        System.out.println("время выбега из 1 графика " + (pMin1.getTimeInMillis() - pmax1.getTimeInMillis()));
-        System.out.println("--------------------------------------------------");
+        //System.out.println("--------------------------------------------------");
+        //System.out.println("время разгона из 1 графика " + pmax1.getTimeInMillis());
+        //System.out.println("время выбега из 1 графика " + (pmin1.getTimeInMillis() - pmax1.getTimeInMillis()));
+       // System.out.println("--------------------------------------------------");
+        
+        
+        Long accelerationTime1 = pmax1.getTimeInMillis();
+        Long decelerationTime1 = (pmin1.getTimeInMillis() - pmax1.getTimeInMillis());
+
+        Long accelerationTime2 = pmax2.getTimeInMillis() - pmin1.getTimeInMillis();
+        Long decelerationTime2 = pmin2.getTimeInMillis()-pmax2.getTimeInMillis();
+        
+        Long accelerationTime3 = pmax3.getTimeInMillis()-pmin2.getTimeInMillis();
+        Long decelerationTime3 = pmin3.getTimeInMillis()-pmax3.getTimeInMillis();
+        
+        Long accelerationTimeResult = (accelerationTime1+accelerationTime2+accelerationTime3)/3;
+        Long decelerationTimeResult = (decelerationTime1+decelerationTime2+decelerationTime3)/3;
+        
+        System.out.println("время разгона итоговое:"+accelerationTimeResult);
+        System.out.println("время выбега итоговое:"+decelerationTimeResult);
         
         return postprocessedMeasurement;
         //return tempM;

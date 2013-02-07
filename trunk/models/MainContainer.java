@@ -48,6 +48,10 @@ public class MainContainer {
     public final static int SIMPLE_RANDOM_GENERATOR = 1;
     
     private static int dataSource = REAL_DEVICE;
+
+    
+    public static int frequency = 400;
+    
     
     public static void setComPortName(String comPortName) {
         if (comPortPreferences == null) {

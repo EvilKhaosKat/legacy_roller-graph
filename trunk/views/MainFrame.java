@@ -58,6 +58,7 @@ public class MainFrame extends JFrame {
     private JMenu menuOptions;
     private JMenu testMenu;
     private JMenu workModeMenu;
+    private JMenu dataSourceMenu;
     private JMenuBar mainMenuBar;
     private JMenuItem testMenuItem1;
     private JMenuItem testMenuItem2;
@@ -68,6 +69,8 @@ public class MainFrame extends JFrame {
     private JMenuItem workModeRealtimeUsual;
     private JMenuItem workModeThreeAverage;
     private JMenuItem workModeThreeSimplified;
+    private JMenuItem dataSourceRealDeviceMenuItem;
+    private JMenuItem dataSourceGeneratorMenuItem;
     private JFreeChart rollerDiagrammer;
     private ChartPanel contentChartPanel;
     private JPanel chartPanel;
@@ -188,6 +191,28 @@ public class MainFrame extends JFrame {
         mainMenuBar.add(workModeMenu);
 
 
+        dataSourceMenu = new JMenu("Источник данных");
+        dataSourceRealDeviceMenuItem = new JMenuItem("Реальное устройство");
+        dataSourceRealDeviceMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MainContainer.setDataSource(MainContainer.REAL_DEVICE);
+                //MainContainer.getMainFrame().setTitle("Roller graph. " + MainContainer.WORKMODE_TITLE_REALTIME_USUAL);
+            }
+        });
+        dataSourceMenu.add(dataSourceRealDeviceMenuItem);
+
+        dataSourceGeneratorMenuItem = new JMenuItem("Генератор чисел");
+        dataSourceGeneratorMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MainContainer.setDataSource(MainContainer.SIMPLE_RANDOM_GENERATOR);
+                //MainContainer.getMainFrame().setTitle("Roller graph. " + MainContainer.WORKMODE_TITLE_POSTPROCESSING_THREE_AVERAGE);
+            }
+        });
+        dataSourceMenu.add(dataSourceGeneratorMenuItem);
+
+        mainMenuBar.add(dataSourceMenu);
+
+
         setJMenuBar(mainMenuBar);
 
         //startServer.addActionListener(new java.awt.event.ActionListener() {
@@ -235,7 +260,7 @@ public class MainFrame extends JFrame {
                 d.startDrawing();
                 //DrawingOrganizer.startDrawing();
                 break;
-                
+
             case MainContainer.WORKMODE_POSTPROCESSING_THREE_AVERAGE:
                 System.out.println("WORKMODE_POSTPROCESSING_THREE_AVERAGE");
                 //ибо постоработка будет после нажатия "стоп" то ничего не делаем более
@@ -245,13 +270,13 @@ public class MainFrame extends JFrame {
                 System.out.println("WORKMODE_POSTPROCESSING_THREE_SIMPLIFIED");
                 break;
         }
-                
-        
+
+
         /*Measurement postprocessedMeasurement = null;
                 
-                //TODO создать обработанный экземпляр
-                d = new Drawer(postprocessedMeasurement, dataset, true);
-                d.startDrawing();*/
+         //TODO создать обработанный экземпляр
+         d = new Drawer(postprocessedMeasurement, dataset, true);
+         d.startDrawing();*/
 
     }
 
@@ -266,16 +291,16 @@ public class MainFrame extends JFrame {
                 System.out.println("WORKMODE_REALTIME_USUAL");
                 //ибо реалтайм - ничего более особенного делать не надо
                 break;
-                
+
             case MainContainer.WORKMODE_POSTPROCESSING_THREE_AVERAGE:
                 System.out.println("WORKMODE_POSTPROCESSING_THREE_AVERAGE");
-               
+
                 Measurement postprocessedMeasurement = null;
                 //TODO создать обработанный экземпляр "измерения"
                 PostProcessorThreeAverage postProcessor = new PostProcessorThreeAverage();
-                postprocessedMeasurement = postProcessor.doPostProcess(MainContainer.getListMeasurements().get(MainContainer.getListMeasurements().size()-1));
+                postprocessedMeasurement = postProcessor.doPostProcess(MainContainer.getListMeasurements().get(MainContainer.getListMeasurements().size() - 1));
                 //переприсвоим последнее измерение на 
-                MainContainer.getListMeasurements().set(MainContainer.getListMeasurements().size()-1, postprocessedMeasurement);
+                MainContainer.getListMeasurements().set(MainContainer.getListMeasurements().size() - 1, postprocessedMeasurement);
                 d = new Drawer(postprocessedMeasurement, dataset, true);
                 d.startDrawing();
                 break;
@@ -375,21 +400,21 @@ public class MainFrame extends JFrame {
         //((ToolPanel) toolPanel).setSpeedCaption(d.toString());
         //speed.setText("Speed: "+d.toString());
     }
-    
+
     public void setAccelerateTimeCaption(double accTime) {
         Double a = new Double(accTime);
-        a=a/1000; //перевод из миллисекунд в секунды
+        a = a / 1000; //перевод из миллисекунд в секунды
         ((ValueIndicationPanel) rightIndicationPanel.innerPanelList.get(3)).setSpeedValue(a.toString());
         //третья индикационная панель - панель со значением времени разгона
     }
-    
+
     public void setDecelerateTimeCaption(double decTime) {
         Double d = new Double(decTime);
-        d=d/1000; //перевод из миллисекунд в секунды
+        d = d / 1000; //перевод из миллисекунд в секунды
         ((ValueIndicationPanel) rightIndicationPanel.innerPanelList.get(4)).setSpeedValue(d.toString());
         //четвертая индикационная панель - панель со значением времени выбега
     }
-    
+
     private void createLeftIndicationPanel() {
         leftIndicationPanel = new IndicationPanel();
         this.add(leftIndicationPanel, BorderLayout.LINE_START);
@@ -431,7 +456,7 @@ public class MainFrame extends JFrame {
         rightIndicationPanel.addElementPanel(tempSpeedIndicationPanel);
         tempSpeedIndicationPanel = new ValueIndicationPanel("100.0", "Vmax");
         rightIndicationPanel.addElementPanel(tempSpeedIndicationPanel);
-        
+
         tempSpeedIndicationPanel = new ValueIndicationPanel("0.0", "Время разгона, с");
         rightIndicationPanel.addElementPanel(tempSpeedIndicationPanel);
         tempSpeedIndicationPanel = new ValueIndicationPanel("0.0", "Время выбега, с");

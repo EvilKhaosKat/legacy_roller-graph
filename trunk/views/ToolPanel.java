@@ -66,7 +66,10 @@ public class ToolPanel extends javax.swing.JPanel {
     private void startAndStopButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startAndStopButtonActionPerformed
         if (startAndStopButton.getText().equals("Start")) {
             try {
-                //MainContainer.getMainFrame().connectMenuItemActionPerfomed(evt);
+                //TODO знаю что решение кривое. исправить
+                if (MainContainer.getDataSource() == MainContainer.REAL_DEVICE) {
+                    MainContainer.getMainFrame().connectMenuItemActionPerfomed(evt);
+                }
                 MainContainer.getMainFrame().menuItemStartActionPerformed(evt);
                 startAndStopButton.setText("Stop");
             } catch (Exception e) {

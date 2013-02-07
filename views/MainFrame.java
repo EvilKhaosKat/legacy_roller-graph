@@ -46,6 +46,7 @@ import models.Measurement;
 import models.newVersion.drawer.Drawer;
 import models.newVersion.reader.Reader;
 import models.postprocessing.PostProcessorThreeAverage;
+import models.postprocessing.PostProcessorThreeSimple;
 import views.optionsframe.SerialPortSettings;
 
 /**
@@ -285,6 +286,9 @@ public class MainFrame extends JFrame {
         //DrawingOrganizer.startDrawing();
         MainContainer.isReading = false;
         Drawer d = null;
+        
+        Measurement postprocessedMeasurement = null;
+        
         //TODO потенциальный баг. если режим работы сменят после начала работы - будет не классно. Надо бы наверно блочить эту возможность
         switch (MainContainer.getWorkMode()) {
             case MainContainer.WORKMODE_REALTIME_USUAL:
@@ -295,7 +299,6 @@ public class MainFrame extends JFrame {
             case MainContainer.WORKMODE_POSTPROCESSING_THREE_AVERAGE:
                 System.out.println("WORKMODE_POSTPROCESSING_THREE_AVERAGE");
 
-                Measurement postprocessedMeasurement = null;
                 //TODO создать обработанный экземпляр "измерения"
                 PostProcessorThreeAverage postProcessor = new PostProcessorThreeAverage();
                 postprocessedMeasurement = postProcessor.doPostProcess(MainContainer.getListMeasurements().get(MainContainer.getListMeasurements().size() - 1));
@@ -307,6 +310,14 @@ public class MainFrame extends JFrame {
 
             case MainContainer.WORKMODE_POSTPROCESSING_THREE_SIMPLIFIED:
                 System.out.println("WORKMODE_POSTPROCESSING_THREE_SIMPLIFIED");
+
+                //TODO создать обработанный экземпляр "измерения"
+                PostProcessorThreeSimple postProcessorSimple = new PostProcessorThreeSimple();
+                postprocessedMeasurement = postProcessorSimple.doPostProcess(MainContainer.getListMeasurements().get(MainContainer.getListMeasurements().size() - 1));
+                //переприсвоим последнее измерение на 
+                MainContainer.getListMeasurements().set(MainContainer.getListMeasurements().size() - 1, postprocessedMeasurement);
+                d = new Drawer(postprocessedMeasurement, dataset, true);
+                d.startDrawing();
                 break;
         }
     }

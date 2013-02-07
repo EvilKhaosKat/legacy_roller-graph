@@ -180,25 +180,50 @@ public class PostProcessorThreeSimple {
         // System.out.println("--------------------------------------------------");
 
 
-        Long accelerationTime1 = pmax1.getTimeInMillis();
-        Long decelerationTime1 = (pmin1.getTimeInMillis() - pmax1.getTimeInMillis());
+        //Long accelerationTime1 = pmax1.getTimeInMillis();
+        //Long decelerationTime1 = (pmin1.getTimeInMillis() - pmax1.getTimeInMillis());
 
-        Long accelerationTime2 = pmax2.getTimeInMillis() - pmin1.getTimeInMillis();
-        Long decelerationTime2 = pmin2.getTimeInMillis() - pmax2.getTimeInMillis();
+        //Long accelerationTime2 = pmax2.getTimeInMillis() - pmin1.getTimeInMillis();
+        //Long decelerationTime2 = pmin2.getTimeInMillis()-pmax2.getTimeInMillis();
 
-        Long accelerationTime3 = pmax3.getTimeInMillis() - pmin2.getTimeInMillis();
-        Long decelerationTime3 = pmin3.getTimeInMillis() - pmax3.getTimeInMillis();
+        //Long accelerationTime3 = pmax3.getTimeInMillis()-pmin2.getTimeInMillis();
+        //Long decelerationTime3 = pmin3.getTimeInMillis()-pmax3.getTimeInMillis();
 
-        Long accelerationTimeResult = (accelerationTime1 + accelerationTime2 + accelerationTime3) / 3;
-        Long decelerationTimeResult = (decelerationTime1 + decelerationTime2 + decelerationTime3) / 3;
+        List<Double> accelerationAndDecelerationTime = PostProcessor.getAccelerationAndDecelerationTime(listOfAverage);
 
-        System.out.println("время разгона итоговое:" + accelerationTimeResult);
-        System.out.println("время выбега итоговое:" + decelerationTimeResult);
+        double accelerationTimeResult = 0L;//(accelerationTime1+accelerationTime2+accelerationTime3)/3;
+        double decelerationTimeResult = 0L;//(decelerationTime1+decelerationTime2+decelerationTime3)/3;
 
-        MainContainer.getMainFrame().setAccelerateTimeCaption(accelerationTimeResult);
-        MainContainer.getMainFrame().setDecelerateTimeCaption(decelerationTimeResult);
+        accelerationTimeResult = accelerationAndDecelerationTime.get(0);
+        decelerationTimeResult = accelerationAndDecelerationTime.get(1);
 
 
+        //System.out.println("время разгона итоговое:"+accelerationTimeResult);
+        //System.out.println("время выбега итоговое:"+decelerationTimeResult);
+
+        //MainContainer.getMainFrame().setAccelerateTimeCaption(accelerationTimeResult);
+        //MainContainer.getMainFrame().setDecelerateTimeCaption(decelerationTimeResult);
+
+        //TODO костыль размером с небеса. исправить
+        listOfAverage.clear();
+        int stepsFromStartToMaxCoordinate = (int) (accelerationTimeResult / MainContainer.frequency);
+        int stepsFromMaxToEndCoordinate = (int) (decelerationTimeResult / MainContainer.frequency);
+        double stepFromStartToMax = (MainContainer.maxSpeed - MainContainer.minSpeed) / (stepsFromStartToMaxCoordinate-1);
+        double stepFromMaxToEnd = (MainContainer.maxSpeed - MainContainer.minSpeed) / (stepsFromMaxToEndCoordinate);
+        Double currentValue = new Double(MainContainer.minSpeed) - stepFromStartToMax;
+        
+        //System.out.println("step to Min "+stepFromMaxToEnd+"=======================");
+        for (int i = 0; i < stepsFromStartToMaxCoordinate; i++) {
+            currentValue += stepFromStartToMax;
+            listOfAverage.add(currentValue);
+        }
+
+        for (int i = 0; i < stepsFromMaxToEndCoordinate; i++) {
+            currentValue -= stepFromMaxToEnd;
+            listOfAverage.add(currentValue);
+        }
+
+        postprocessedMeasurement.setListNeedfulSpeedsData(listOfAverage);
         return postprocessedMeasurement;
         //return tempM;
     }

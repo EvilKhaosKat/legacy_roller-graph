@@ -23,7 +23,6 @@ public class TestReaderSimulator extends TimerTask {
 
    public void run() {
 
-
         if (/*reader.getCount()>reader.getTime()*1000/reader.getFrequency()*/!MainContainer.isReading) {
             System.out.println("чтение завершено");
             //Drawer.drawGraphic();

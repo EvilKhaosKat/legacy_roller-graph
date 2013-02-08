@@ -11,7 +11,7 @@ public class ValueIndicationPanel extends InnerPanel {
      */
     public ValueIndicationPanel(String textField, String label) {
         initComponents();
-        mainTextField.setText(textField);
+        mainTextField.setText("<html> "+textField);
         mainLabel.setText(label);
         
     }
@@ -20,8 +20,12 @@ public class ValueIndicationPanel extends InnerPanel {
         initComponents();
     }
     
-    public void setSpeedValue(String speed) {
+    public void setTextFieldValue(String speed) {
         mainTextField.setText(speed);
+    }
+    
+    public String getTextFieldValue() {
+        return mainTextField.getText();
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -32,20 +36,22 @@ public class ValueIndicationPanel extends InnerPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        mainTextField = new javax.swing.JTextField();
         mainLabel = new javax.swing.JLabel();
+        mainTextField = new javax.swing.JLabel();
 
         setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        setMaximumSize(new java.awt.Dimension(240, 83));
-
-        mainTextField.setEditable(false);
-        mainTextField.setBackground(new java.awt.Color(0, 0, 0));
-        mainTextField.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        mainTextField.setForeground(new java.awt.Color(102, 255, 51));
-        mainTextField.setText("0.0");
+        setMaximumSize(new java.awt.Dimension(340, 83));
 
         mainLabel.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        mainLabel.setText("Текущая скорость");
+        mainLabel.setText("Текущая скорость ");
+        mainLabel.setToolTipText("");
+
+        mainTextField.setBackground(new java.awt.Color(0, 0, 0));
+        mainTextField.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        mainTextField.setForeground(new java.awt.Color(51, 255, 0));
+        mainTextField.setText("0.0");
+        mainTextField.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        mainTextField.setOpaque(true);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -54,24 +60,24 @@ public class ValueIndicationPanel extends InnerPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(mainTextField)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(mainLabel)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(mainTextField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(mainTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(mainTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(mainLabel)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel mainLabel;
-    private javax.swing.JTextField mainTextField;
+    private javax.swing.JLabel mainTextField;
     // End of variables declaration//GEN-END:variables
 }

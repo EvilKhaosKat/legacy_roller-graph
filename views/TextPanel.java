@@ -39,7 +39,7 @@ public class TextPanel extends InnerPanel{
 
         setBackground(new java.awt.Color(153, 255, 153));
         setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        setMaximumSize(new java.awt.Dimension(500, 70));
+        setMaximumSize(new java.awt.Dimension(500, 90));
         setMinimumSize(new java.awt.Dimension(200, 70));
         setPreferredSize(new java.awt.Dimension(300, 70));
         addMouseListener(new java.awt.event.MouseAdapter() {
@@ -57,16 +57,16 @@ public class TextPanel extends InnerPanel{
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(83, Short.MAX_VALUE)
+                .addContainerGap(100, Short.MAX_VALUE)
                 .addComponent(mainLabel)
-                .addContainerGap(104, Short.MAX_VALUE))
+                .addContainerGap(118, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(17, Short.MAX_VALUE)
+                .addContainerGap(20, Short.MAX_VALUE)
                 .addComponent(mainLabel)
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 

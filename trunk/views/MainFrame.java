@@ -527,7 +527,7 @@ public class MainFrame extends JFrame {
         //TODO две особые панели с отслеживанием достижения скорости до 40 и 100 км
         tempTextPanel = new TextPanel("<html> Разогнались до 40 км/ч. Разгонись до 100 км/ч.");
         leftIndicationPanel.addElementPanel(tempTextPanel);
-        tempTextPanel = new TextPanel("<html> Разогнались до 100 км/ч. Отпусти педаль.");
+        tempTextPanel = new TextPanel("<html> Разогнались до 100 км/ч. Отпусти педаль. <br>Выжми сцепление.");
         leftIndicationPanel.addElementPanel(tempTextPanel);
 
     }

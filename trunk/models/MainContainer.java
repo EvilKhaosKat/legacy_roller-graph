@@ -52,6 +52,7 @@ public class MainContainer {
     
     public static int frequency = 400;
     
+    private static int setTimeValuesCounter = 1;
     
     public static void setComPortName(String comPortName) {
         if (comPortPreferences == null) {
@@ -109,5 +110,14 @@ public class MainContainer {
     public static void setDataSource(int dataSource) {
         MainContainer.dataSource = dataSource;
     }
+
+    public static int getSetTimeValuesCounter() {
+        return setTimeValuesCounter;
+    }
+
+    public static void setSetTimeValuesCounter(int setTimeValuesCounter) {
+        MainContainer.setTimeValuesCounter = setTimeValuesCounter;
+    }
+    
     
 }

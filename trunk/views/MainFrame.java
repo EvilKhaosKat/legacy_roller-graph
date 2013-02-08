@@ -286,9 +286,9 @@ public class MainFrame extends JFrame {
         //DrawingOrganizer.startDrawing();
         MainContainer.isReading = false;
         Drawer d = null;
-        
+
         Measurement postprocessedMeasurement = null;
-        
+
         //TODO потенциальный баг. если режим работы сменят после начала работы - будет не классно. Надо бы наверно блочить эту возможность
         switch (MainContainer.getWorkMode()) {
             case MainContainer.WORKMODE_REALTIME_USUAL:
@@ -407,7 +407,7 @@ public class MainFrame extends JFrame {
         Double bd = new BigDecimal(d).setScale(2, RoundingMode.HALF_UP).doubleValue();
         //d=d/14.625; //40km=585. 585/40 = 14.625 
         System.out.println("Setting current speed:" + d);
-        ((ValueIndicationPanel) rightIndicationPanel.innerPanelList.get(0)).setSpeedValue(bd.toString());
+        ((ValueIndicationPanel) rightIndicationPanel.innerPanelList.get(0)).setTextFieldValue(bd.toString());
         //new BigDecimal(3.675f).setScale(2, RoundingMode.HALF_UP).floatValue()
         //String.format("%.2f", d)
         //((ToolPanel) toolPanel).setSpeedCaption(d.toString());
@@ -417,15 +417,86 @@ public class MainFrame extends JFrame {
     public void setAccelerateTimeCaption(double accTime) {
         Double a = new Double(accTime);
         a = a / 1000; //перевод из миллисекунд в секунды
-        ((ValueIndicationPanel) rightIndicationPanel.innerPanelList.get(3)).setSpeedValue(a.toString());
+        StringBuffer resultingAccelerateTimeCaption = new StringBuffer();
+        if (MainContainer.getSetTimeValuesCounter() == 1) {
+            resultingAccelerateTimeCaption.append("<html>");
+        } else {
+            //добавим текущее значение
+            resultingAccelerateTimeCaption.append(((ValueIndicationPanel) rightIndicationPanel.innerPanelList.get(3)).getTextFieldValue()).append(" ");
+        }
+
+        resultingAccelerateTimeCaption.append("<font color=");
+        switch (MainContainer.getSetTimeValuesCounter()) {
+            case 1:
+                resultingAccelerateTimeCaption.append("red");
+                break;
+            case 2:
+                resultingAccelerateTimeCaption.append("#0050ff"); //blue
+                break;
+            case 3:
+                resultingAccelerateTimeCaption.append("lime");
+                break;
+            case 4:
+                resultingAccelerateTimeCaption.append("yellow");
+                break;
+            case 5:
+                resultingAccelerateTimeCaption.append("fuchsia");
+                break;
+            case 6:
+                resultingAccelerateTimeCaption.append("aqua");
+                break;
+            default:
+                resultingAccelerateTimeCaption.append("orange");
+                break;
+        }
+        resultingAccelerateTimeCaption.append(">" + a.toString() + "</font>");
+        ((ValueIndicationPanel) rightIndicationPanel.innerPanelList.get(3)).setTextFieldValue(resultingAccelerateTimeCaption.toString());
         //третья индикационная панель - панель со значением времени разгона
     }
 
     public void setDecelerateTimeCaption(double decTime) {
         Double d = new Double(decTime);
         d = d / 1000; //перевод из миллисекунд в секунды
-        ((ValueIndicationPanel) rightIndicationPanel.innerPanelList.get(4)).setSpeedValue(d.toString());
+
+        StringBuffer resultingDecelerateTimeCaption = new StringBuffer();
+        if (MainContainer.getSetTimeValuesCounter() == 1) {
+            resultingDecelerateTimeCaption.append("<html>");
+        } else {
+            //добавим текущее значение
+            resultingDecelerateTimeCaption.append(((ValueIndicationPanel) rightIndicationPanel.innerPanelList.get(4)).getTextFieldValue()).append(" ");
+        }
+
+        resultingDecelerateTimeCaption.append("<font color=");
+        switch (MainContainer.getSetTimeValuesCounter()) {
+            case 1:
+                resultingDecelerateTimeCaption.append("red");
+                break;
+            case 2:
+                resultingDecelerateTimeCaption.append("#0050ff"); //blue
+                break;
+            case 3:
+                resultingDecelerateTimeCaption.append("lime");
+                break;
+            case 4:
+                resultingDecelerateTimeCaption.append("yellow");
+                break;
+            case 5:
+                resultingDecelerateTimeCaption.append("fuchsia");
+                break;
+            case 6:
+                resultingDecelerateTimeCaption.append("aqua");
+                break;
+            default:
+                resultingDecelerateTimeCaption.append("orange");
+                break;
+        }
+        resultingDecelerateTimeCaption.append(">" + d.toString() + "</font>");
+
+        ((ValueIndicationPanel) rightIndicationPanel.innerPanelList.get(4)).setTextFieldValue(resultingDecelerateTimeCaption.toString());
         //четвертая индикационная панель - панель со значением времени выбега
+
+        MainContainer.setSetTimeValuesCounter((MainContainer.getSetTimeValuesCounter() + 1));
+
     }
 
     private void createLeftIndicationPanel() {

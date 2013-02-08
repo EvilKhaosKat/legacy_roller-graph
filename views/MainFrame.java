@@ -61,6 +61,7 @@ public class MainFrame extends JFrame {
     private JMenu workModeMenu;
     private JMenu dataSourceMenu;
     private JMenuBar mainMenuBar;
+    private JMenuItem exitMenuItem;
     private JMenuItem testMenuItem1;
     private JMenuItem testMenuItem2;
     private JMenuItem saveEtalonMenuItem;
@@ -108,7 +109,13 @@ public class MainFrame extends JFrame {
 
         //connectMenuItemActionPerfomed
         menuFile.add(new JSeparator());
-        menuFile.add(new JMenuItem("Выход"));
+        exitMenuItem = new JMenuItem("Выход");
+        exitMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                System.exit(0);
+            }
+        });
+        menuFile.add(exitMenuItem);
         mainMenuBar.add(menuFile);
 
         menuOptions = new JMenu("Настройки");

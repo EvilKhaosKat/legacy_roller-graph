@@ -52,6 +52,7 @@ public class IndicationPanel extends javax.swing.JPanel {
     public void disableAllPanels() {
         for (InnerPanelInterface innerPanel:innerPanelList) {
             innerPanel.setDisabled();
+            //revalidate();
         }
         
     }

@@ -58,10 +58,10 @@ public class MainContainer {
     private static int measurementCount = 1;
    
     //--------------------------------------------------------------------------
-    public static int SPEED_LOWER_THAN_MIN = 0;
-    public static int SPEED_HIGHER_THAN_MIN = 1;
-    public static int SPEED_LOWERING_DECELERATION = 2;
-    public static int SPEED_HIGHER_THAN_MAX = 3;
+    public static final int SPEED_LOWER_THAN_MIN = 0;
+    public static final int SPEED_HIGHER_THAN_MIN = 1;
+    public static final int SPEED_LOWERING_DECELERATION = 2;
+    public static final int SPEED_HIGHER_THAN_MAX = 3;
     
     private static int currentState = SPEED_LOWER_THAN_MIN;
     

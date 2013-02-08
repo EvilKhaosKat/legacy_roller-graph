@@ -320,6 +320,7 @@ public class MainFrame extends JFrame {
                 d.startDrawing();
                 break;
         }
+        MainContainer.getSi30Counter().disconnect();
     }
 
     public void menuItemSaveEtalonActionPerformed(ActionEvent evt) {
@@ -374,6 +375,7 @@ public class MainFrame extends JFrame {
             Supervisor.startThatProcess();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
             throw new RuntimeException(e);
         }
 

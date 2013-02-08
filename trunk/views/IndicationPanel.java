@@ -49,6 +49,13 @@ public class IndicationPanel extends javax.swing.JPanel {
         innerPanelList.clear();
     }
     
+    public void disableAllPanels() {
+        for (InnerPanelInterface innerPanel:innerPanelList) {
+            innerPanel.setDisabled();
+        }
+        
+    }
+    
     //TODO ибо я layout делаю свой то в этом сгенерированном коде смысла нет. удалить надо бы. 
     /**
      * This method is called from within the constructor to initialize the form.

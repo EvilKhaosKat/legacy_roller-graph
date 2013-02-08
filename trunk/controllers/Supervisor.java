@@ -46,7 +46,7 @@ public class Supervisor {
     	}	
     	//setDisabledInnerPanelByNumber(number);
         if ((number + 1) </*=*/ innerPanelList.size()) {
-            setEnabledInnerPanelByNumber(number + 1);
+            setEnabledInnerPanelByNumber(number+ 1);
         }
     }
     

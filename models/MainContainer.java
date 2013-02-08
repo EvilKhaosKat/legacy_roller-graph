@@ -5,6 +5,7 @@ import org.extdev.device.si30.SI30Counter;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import javax.swing.JButton;
 
 import views.MainFrame;
 
@@ -53,6 +54,20 @@ public class MainContainer {
     public static int frequency = 400;
     
     private static int setTimeValuesCounter = 1;
+    
+    private static int measurementCount = 1;
+   
+    //--------------------------------------------------------------------------
+    public static int SPEED_LOWER_THAN_MIN = 0;
+    public static int SPEED_HIGHER_THAN_MIN = 1;
+    public static int SPEED_LOWERING_DECELERATION = 2;
+    public static int SPEED_HIGHER_THAN_MAX = 3;
+    
+    private static int currentState = SPEED_LOWER_THAN_MIN;
+    
+    
+    private static JButton startAndStopButton;
+
     
     public static void setComPortName(String comPortName) {
         if (comPortPreferences == null) {
@@ -117,6 +132,30 @@ public class MainContainer {
 
     public static void setSetTimeValuesCounter(int setTimeValuesCounter) {
         MainContainer.setTimeValuesCounter = setTimeValuesCounter;
+    }
+
+    public static int getMeasurementCount() {
+        return measurementCount;
+    }
+
+    public static void setMeasurementCount(int measurementCount) {
+        MainContainer.measurementCount = measurementCount;
+    }
+
+    public static int getCurrentState() {
+        return currentState;
+    }
+
+    public static void setCurrentState(int currentState) {
+        MainContainer.currentState = currentState;
+    }
+
+    public static JButton getStartAndStopButton() {
+        return startAndStopButton;
+    }
+
+    public static void setStartAndStopButton(JButton startAndStopButton) {
+        MainContainer.startAndStopButton = startAndStopButton;
     }
     
     

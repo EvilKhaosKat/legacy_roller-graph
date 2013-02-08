@@ -372,7 +372,7 @@ public class MainFrame extends JFrame {
         try {
             si30Counter.connect();
             System.out.println("Connected");
-            Supervisor.startThatProcess();
+            //Supervisor.startThatProcess();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             e.printStackTrace();
@@ -545,6 +545,9 @@ public class MainFrame extends JFrame {
         rightIndicationPanel.addElementPanel(tempSpeedIndicationPanel);
         tempSpeedIndicationPanel = new ValueIndicationPanel("0.0", "Время выбега, с");
         rightIndicationPanel.addElementPanel(tempSpeedIndicationPanel);
+        
+        tempSpeedIndicationPanel = new ValueIndicationPanel("-", "Номер замера");
+        rightIndicationPanel.addElementPanel(tempSpeedIndicationPanel);
 
         /*tempSpeedIndicationPanel = new ValueIndicationPanel("40.0","t разгона");
          rightIndicationPanel.addElementPanel(tempSpeedIndicationPanel);
@@ -564,5 +567,9 @@ public class MainFrame extends JFrame {
 
     public IndicationPanel getRightIndicationPanel() {
         return rightIndicationPanel;
+    }
+    
+    public void setMeasurementCount(String m) {
+        ((ValueIndicationPanel) rightIndicationPanel.innerPanelList.get(5)).setTextFieldValue(m);
     }
 }

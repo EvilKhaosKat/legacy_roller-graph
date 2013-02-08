@@ -38,9 +38,9 @@ public class TestReaderSimulator extends TimerTask {
         measurementsCount++;
         //1462 = 100км
         if ((measurementsCount > 20 )) {
-            value = (int) (value + Math.round(80*(25-measurementsCount*0.4)) + random.nextInt(30));
+            value = (int) (value + (Math.round(80*(25-measurementsCount*0.4)) + random.nextInt(30)));
         } else if ( measurementsCount > 1) {
-            value = value + Math.round(80*measurementsCount) + random.nextInt(30) ;
+            value = value + (Math.round(80*measurementsCount) + random.nextInt(30)) ;
         }
         reader.getMeasurement().addMeasure(value);
         System.out.println("value:"+value);

@@ -4,6 +4,7 @@
  */
 package views;
 
+import controllers.Supervisor;
 import java.util.List;
 import models.MainContainer;
 import models.postprocessing.PostProcessor;
@@ -19,6 +20,7 @@ public class ToolPanel extends javax.swing.JPanel {
      */
     public ToolPanel() {
         initComponents();
+        MainContainer.setStartAndStopButton(startAndStopButton);
     }
 
     public void setSpeedCaption(String speed) {
@@ -69,11 +71,16 @@ public class ToolPanel extends javax.swing.JPanel {
         if (startAndStopButton.getText().equals("Start")) {
             try {
                 //TODO знаю что решение кривое. исправить
+                Supervisor.startThatProcess();
                 if (MainContainer.getDataSource() == MainContainer.REAL_DEVICE) {
                     MainContainer.getMainFrame().connectMenuItemActionPerfomed(evt);
                 }
                 MainContainer.getMainFrame().menuItemStartActionPerformed(evt);
                 startAndStopButton.setText("Stop");
+
+                MainContainer.getMainFrame().setMeasurementCount("1");
+                MainContainer.setCurrentState(MainContainer.SPEED_LOWER_THAN_MIN);
+
             } catch (Exception e) {
                 System.out.println("Exception: " + e.getMessage());
             }
@@ -81,10 +88,10 @@ public class ToolPanel extends javax.swing.JPanel {
         } else {
             MainContainer.getMainFrame().menuItemStopActionPerformed(evt);
             startAndStopButton.setText("Start");
-            
+
             List<Double> accelerationAndDecelerationTime = PostProcessor.getAccelerationAndDecelerationTime(
                     MainContainer.getListMeasurements().get(
-                        MainContainer.getListMeasurements().size()-1).getListNeedfulSpeedsData());
+                    MainContainer.getListMeasurements().size() - 1).getListNeedfulSpeedsData());
 
             double accelerationTimeResult = 0L;//(accelerationTime1+accelerationTime2+accelerationTime3)/3;
             double decelerationTimeResult = 0L;//(decelerationTime1+decelerationTime2+decelerationTime3)/3;
@@ -97,6 +104,12 @@ public class ToolPanel extends javax.swing.JPanel {
 
             MainContainer.getMainFrame().setAccelerateTimeCaption(accelerationTimeResult);
             MainContainer.getMainFrame().setDecelerateTimeCaption(decelerationTimeResult);
+
+            MainContainer.getMainFrame().setMeasurementCount("-");
+            MainContainer.setCurrentState(MainContainer.SPEED_LOWER_THAN_MIN);
+            MainContainer.setMeasurementCount(1);
+            
+            MainContainer.getMainFrame().getLeftIndicationPanel().disableAllPanels();
         }
 
 

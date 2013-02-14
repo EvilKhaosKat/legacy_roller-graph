@@ -38,6 +38,7 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JButton;
@@ -45,6 +46,7 @@ import javax.swing.JOptionPane;
 import models.Measurement;
 import models.newVersion.drawer.Drawer;
 import models.newVersion.reader.Reader;
+import models.postprocessing.PostProcessor;
 import models.postprocessing.PostProcessorThreeAverage;
 import models.postprocessing.PostProcessorThreeSimple;
 import views.optionsframe.SerialPortSettings;
@@ -365,6 +367,25 @@ public class MainFrame extends JFrame {
 
             Drawer d = new Drawer(measurement, dataset, true);
             d.startDrawing();
+            
+            
+            
+            List<Double> accelerationAndDecelerationTime = PostProcessor.getAccelerationAndDecelerationTime(
+                    MainContainer.getListMeasurements().get(
+                    MainContainer.getListMeasurements().size() - 1).getListNeedfulSpeedsData());
+
+            double accelerationTimeResult = 0L;//(accelerationTime1+accelerationTime2+accelerationTime3)/3;
+            double decelerationTimeResult = 0L;//(decelerationTime1+decelerationTime2+decelerationTime3)/3;
+
+            accelerationTimeResult = accelerationAndDecelerationTime.get(0);
+            decelerationTimeResult = accelerationAndDecelerationTime.get(1);
+
+            System.out.println("время разгона итоговое:" + accelerationTimeResult);
+            System.out.println("время выбега итоговое:" + decelerationTimeResult);
+
+            MainContainer.getMainFrame().setAccelerateTimeCaption(accelerationTimeResult);
+            MainContainer.getMainFrame().setDecelerateTimeCaption(decelerationTimeResult);
+            
         } catch (Exception ex) {
             System.out.println("Error during loading etalon." + ex.getMessage());
         }

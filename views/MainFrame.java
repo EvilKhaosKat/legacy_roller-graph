@@ -49,6 +49,8 @@ import models.newVersion.reader.Reader;
 import models.postprocessing.PostProcessor;
 import models.postprocessing.PostProcessorThreeAverage;
 import models.postprocessing.PostProcessorThreeSimple;
+import models.postprocessing.PostProcessorOneSimple;
+import models.postprocessing.PostProcessorTwoSimple;
 import views.optionsframe.SerialPortSettings;
 
 /**
@@ -328,6 +330,31 @@ public class MainFrame extends JFrame {
                 d = new Drawer(postprocessedMeasurement, dataset, true);
                 d.startDrawing();
                 break;
+                
+            case MainContainer.WORKMODE_POSTPROCESSING_TWO_SIMPLIFIED:
+                System.out.println("WORKMODE_POSTPROCESSING_TWO_SIMPLIFIED");
+
+                //TODO создать обработанный экземпляр "измерения"
+                PostProcessorTwoSimple postProcessorSimpleTwo = new PostProcessorTwoSimple();
+                postprocessedMeasurement = postProcessorSimpleTwo.doPostProcess(MainContainer.getListMeasurements().get(MainContainer.getListMeasurements().size() - 1));
+                //переприсвоим последнее измерение на 
+                MainContainer.getListMeasurements().set(MainContainer.getListMeasurements().size() - 1, postprocessedMeasurement);
+                d = new Drawer(postprocessedMeasurement, dataset, true);
+                d.startDrawing();
+                break;
+            case MainContainer.WORKMODE_POSTPROCESSING_ONE_SIMPLIFIED:
+                System.out.println("WORKMODE_POSTPROCESSING_ONE_SIMPLIFIED");
+
+                //TODO создать обработанный экземпляр "измерения"
+                PostProcessorOneSimple postProcessorSimpleOne = new PostProcessorOneSimple();
+                postprocessedMeasurement = postProcessorSimpleOne.doPostProcess(MainContainer.getListMeasurements().get(MainContainer.getListMeasurements().size() - 1));
+                //переприсвоим последнее измерение на 
+                MainContainer.getListMeasurements().set(MainContainer.getListMeasurements().size() - 1, postprocessedMeasurement);
+                d = new Drawer(postprocessedMeasurement, dataset, true);
+                d.startDrawing();
+                break;
+                         
+                
         }
         MainContainer.getSi30Counter().disconnect();
     }
@@ -587,6 +614,11 @@ public class MainFrame extends JFrame {
         //startAndStopButton.setPreferredSize(new Dimension(173, 94));
         toolPanel = new ToolPanel();
         rightIndicationPanel.add(toolPanel);
+        
+                
+        SimplifyModePanel tempSimplifyModePanel = new SimplifyModePanel();
+        rightIndicationPanel.addElementPanel(tempSimplifyModePanel);
+        
     }
 
     public IndicationPanel getLeftIndicationPanel() {

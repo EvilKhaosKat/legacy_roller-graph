@@ -37,13 +37,16 @@ public class MainContainer {
     public final static int WORKMODE_REALTIME_USUAL = 1;
     public final static int WORKMODE_POSTPROCESSING_THREE_AVERAGE = 2;
     public final static int WORKMODE_POSTPROCESSING_THREE_SIMPLIFIED = 3;
+    public final static int WORKMODE_POSTPROCESSING_TWO_SIMPLIFIED = 4;
+    public final static int WORKMODE_POSTPROCESSING_ONE_SIMPLIFIED = 5;
     
-    private static int workMode = WORKMODE_REALTIME_USUAL;
+    private static int workMode = WORKMODE_POSTPROCESSING_ONE_SIMPLIFIED;
    
     public static String WORKMODE_TITLE_REALTIME_USUAL = "Режим реального времени.";
     public static String WORKMODE_TITLE_POSTPROCESSING_THREE_AVERAGE = "Режим трёх измерений. График среднего.";
-    public static String WORKMODE_TITLE_POSTPROCESSING_THREE_SIMPLIFIED = "Режим трёх измерений. График упрощенный.";
-
+    public static String WORKMODE_TITLE_POSTPROCESSING_THREE_SIMPLIFIED = "Режим трёх измерений. График упрощенный. 3 измерения.";
+    public static String WORKMODE_TITLE_POSTPROCESSING_TWO_SIMPLIFIED = "Режим трёх измерений. График упрощенный. 2 измерения.";
+    public static String WORKMODE_TITLE_POSTPROCESSING_ONE_SIMPLIFIED = "Режим трёх измерений. График упрощенный. 1 измерение.";
     
     public final static int REAL_DEVICE = 0;
     public final static int SIMPLE_RANDOM_GENERATOR = 1;

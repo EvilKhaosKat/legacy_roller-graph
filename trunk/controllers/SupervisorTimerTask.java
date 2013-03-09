@@ -85,9 +85,13 @@ public class SupervisorTimerTask extends TimerTask {
             MainContainer.getMainFrame().getLeftIndicationPanel().disableAllPanels();
             this.cancel();
         }
-
+        
+        int workMode = MainContainer.getWorkMode();
         //TODO по идее можно встроить штуку - три замера сделали - автоматически остановить работу
-        if ((MainContainer.getWorkMode() != MainContainer.WORKMODE_REALTIME_USUAL) && (MainContainer.getMeasurementCount() > 3)) {
+        if (
+                (workMode == (MainContainer.WORKMODE_POSTPROCESSING_THREE_AVERAGE) || 
+                 workMode == (MainContainer.WORKMODE_POSTPROCESSING_THREE_SIMPLIFIED)) 
+            && (MainContainer.getMeasurementCount() > 3)) {
             //в режимах работы 3 измерения если они произведены - автоматически остановим программу
             java.awt.EventQueue.invokeLater(new Runnable() {
                 public void run() {
@@ -96,7 +100,30 @@ public class SupervisorTimerTask extends TimerTask {
                 }
             });
         }
-
+        
+        if (
+                (workMode == (MainContainer.WORKMODE_POSTPROCESSING_TWO_SIMPLIFIED)) 
+            && (MainContainer.getMeasurementCount() > 2)) {
+            //в режимах работы 3 измерения если они произведены - автоматически остановим программу
+            java.awt.EventQueue.invokeLater(new Runnable() {
+                public void run() {
+                    MainContainer.getStartAndStopButton().doClick();
+                    MainContainer.getMainFrame().revalidate();
+                }
+            });
+        }
             
+        if (
+                (workMode == (MainContainer.WORKMODE_POSTPROCESSING_ONE_SIMPLIFIED)) 
+            && (MainContainer.getMeasurementCount() > 1)) {
+            //в режимах работы 3 измерения если они произведены - автоматически остановим программу
+            java.awt.EventQueue.invokeLater(new Runnable() {
+                public void run() {
+                    MainContainer.getStartAndStopButton().doClick();
+                    MainContainer.getMainFrame().revalidate();
+                }
+            });
+        }
+        
     }
 }
